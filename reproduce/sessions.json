@@ -1,0 +1,31 @@
+{
+  "about": "One Kaggle session per group (GPU T4 x2). Hours are wall-clock times of the original runs of each group with both GPUs in use; recorded_holdout is the holdout macro-F1 of the original holdout runs of the same group, for comparing a rerun of configs/task_*/holdout.json.",
+  "a": {
+    "official_macro_f1": 0.825049,
+    "sessions": [
+      {"order": 1, "group": "tapt", "classifiers": 4, "rdrop": 0.0, "tapt_seed": 42, "hours": 7.6, "original_run": 29},
+      {"order": 2, "group": "tapt_rdrop", "classifiers": 2, "rdrop": 0.5, "tapt_seed": 42, "hours": 7.5, "original_run": 35},
+      {"order": 3, "group": "bag1", "classifiers": 2, "rdrop": 0.0, "tapt_seed": 1, "hours": 4.8, "original_run": 36},
+      {"order": 4, "group": "bag2", "classifiers": 2, "rdrop": 0.0, "tapt_seed": 2, "hours": 4.8, "original_run": 36},
+      {"order": 5, "group": "bag3", "classifiers": 2, "rdrop": 0.0, "tapt_seed": 3, "hours": 4.8, "original_run": 36}
+    ],
+    "recorded_holdout": {
+      "tapt": {"macro_f1": 0.8702, "run": 31, "what": "TAPT x4, one adapter"},
+      "tapt_rdrop": {"macro_f1": 0.8647, "run": 33, "what": "TAPT + R-Drop x2"},
+      "bag1": {"macro_f1": 0.8675, "run": 37, "what": "TAPT seed 1, classifiers 42 and 43"}
+    }
+  },
+  "b": {
+    "official_macro_f1": 0.736678,
+    "sessions": [
+      {"order": 1, "group": "tapt_rdrop", "classifiers": 2, "rdrop": 0.5, "tapt_seed": 42, "hours": 6.5, "original_run": 36},
+      {"order": 2, "group": "bag1", "classifiers": 2, "rdrop": 0.0, "tapt_seed": 1, "hours": 4.5, "original_run": 37},
+      {"order": 3, "group": "bag2", "classifiers": 2, "rdrop": 0.0, "tapt_seed": 2, "hours": 4.5, "original_run": 37},
+      {"order": 4, "group": "bag3", "classifiers": 2, "rdrop": 0.0, "tapt_seed": 3, "hours": 4.5, "original_run": 37}
+    ],
+    "recorded_holdout": {
+      "tapt_rdrop": {"macro_f1": 0.7026, "run": 35, "what": "TAPT + R-Drop x2"},
+      "bag1": {"macro_f1": 0.7056, "run": 38, "what": "TAPT seed 1, classifiers 42 and 43"}
+    }
+  }
+}

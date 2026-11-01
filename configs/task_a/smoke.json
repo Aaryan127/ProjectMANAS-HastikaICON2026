@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "task": "a",
+  "model": "google/gemma-4-12B",
+  "model_revision": null,
+  "mode": "full",
+  "classifier_epochs": 1,
+  "tapt_epochs": 1,
+  "lr": 0.0001,
+  "head_lr": 0.0005,
+  "lora_rank": 16,
+  "prompt": "short",
+  "class_weight": "balanced",
+  "label_smoothing": 0.05,
+  "bs": 8,
+  "grad_accum": 2,
+  "max_len": 320,
+  "tapt_bs": 1,
+  "tapt_grad_accum": 16,
+  "tapt_max_len": 128,
+  "member_count": 2,
+  "groups": [
+    {
+      "id": "smoke",
+      "tapt_seed": 42,
+      "classifier_seeds": [
+        42,
+        43
+      ],
+      "rdrop": 0.5
+    }
+  ],
+  "aggregation": "equal_per_classifier",
+  "seed_status": "smoke",
+  "provenance": "smoke test: the submitted recipe's model and settings, one epoch each on a small sample; checks that every stage runs, not accuracy",
+  "data_policy": "this task's labelled files only; TAPT on training-side text plus the external corpus; external comments matching holdout or test inputs removed",
+  "smoke": {
+    "train_rows": 96,
+    "external_rows": 64
+  }
+}

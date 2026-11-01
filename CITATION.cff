@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this software, cite it with the metadata below, and credit the HASTIKA data with the references listed here. Paper metadata will be added when it is published."
+title: "Project MANAS at HASTIKA / ICON 2026"
+type: software
+authors:
+  - given-names: "Robin Punnen"
+    family-names: "Alex"
+    email: "robinalexpnn@gmail.com"
+    affiliation: "Manipal Institute of Technology, Manipal Academy of Higher Education"
+  - given-names: "Aaryan Ganesh"
+    family-names: "Salunke"
+    email: "aaryansalunke12@gmail.com"
+    affiliation: "Manipal Institute of Technology, Manipal Academy of Higher Education"
+repository-code: "https://github.com/Aaryan127/ProjectMANAS-HastikaICON2026"
+version: 0.3.1
+references:
+  - type: article
+    title: "HASTIKA: hate speech and target identification in Kannada-English code-mixed text"
+    authors:
+      - family-names: "Kavatagi"
+        given-names: "Sanjana"
+      - family-names: "Rachh"
+        given-names: "Rashmi"
+    journal: "Language Resources and Evaluation"
+    volume: 59
+    issue: 3
+    start: 2811
+    end: 2856
+    year: 2025
+    doi: "10.1007/s10579-025-09836-1"
+  - type: data
+    title: "HASTIKA @ ICON-2026: Hate Speech and Target Category Identification in Kannada-English Code-Mixed Text, Starting Kit"
+    authors:
+      - name: "HASTIKA organizers"
+    url: "https://github.com/shankarb14/Hastika-ICON2026"
+    year: 2026
