@@ -1,0 +1,22 @@
+{
+  "task": "a",
+  "run": 8,
+  "session": null,
+  "title": "Task-adaptive pretraining (TAPT) holdout comparison",
+  "notebook": "notebooks/experiments/task_a/08_tapt_holdout.ipynb",
+  "script": null,
+  "status": "partial_failure",
+  "outcome": "Both arms (stock MuRIL and Task-A-domain TAPT MuRIL) trained, but the summary assertion failed, so no holdout score was captured.",
+  "method": "test Task-A-domain TAPT before demojized MuRIL fine-tuning",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run8_tapt_holdout.log",
+      "sha256": "ed72371bb565a791976ccb612c6f0b64138465826b7f9ab7e206c423390e28f6",
+      "lines": 1373,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

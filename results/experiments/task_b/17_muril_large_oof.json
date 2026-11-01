@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 17,
+  "session": null,
+  "title": "MuRIL-large, out-of-fold",
+  "notebook": "notebooks/experiments/task_b/17_muril_large_oof.ipynb",
+  "script": null,
+  "status": "failed_training",
+  "outcome": "MuRIL-large five-fold: TAPT completed, then fold 1 ran out of GPU memory.",
+  "method": "evaluate MuRIL-large with five-fold held-out predictions while submissions are closed",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run17_muril_large_oof_oom.log",
+      "sha256": "e138c8b2de23a12727b544fd3e7966a37144b5e0df4d48202a9560e1e6c11db2",
+      "lines": 1703,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

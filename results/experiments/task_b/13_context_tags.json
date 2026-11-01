@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 13,
+  "session": null,
+  "title": "Topic, mood and address tags",
+  "notebook": "notebooks/experiments/task_b/13_context_tags.ipynb",
+  "script": null,
+  "status": "not_run",
+  "outcome": "Fold-safe topic, mood and address tags against the winning recipe. Never run.",
+  "method": "compare the winning recipe with fold-safe topic, mood and address tags",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 34,
+  "session": null,
+  "title": "TAPT holdout twin",
+  "notebook": "notebooks/experiments/task_b/34_tapt_final_holdout_twin.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "Holdout twin of Run 24. No run log or score was kept, so whether it ran is not known.",
+  "method": "holdout twin of Run 24: TAPT (2 epochs) x4 + Run 22's recipe x2",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

@@ -1,0 +1,79 @@
+{
+  "task": "b",
+  "run": 8,
+  "session": null,
+  "title": "One-layer reinitialization, seeds 43 and 44",
+  "notebook": "notebooks/experiments/task_b/08_reinit_confirmation.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Seeds 43 and 44: averaged probabilities 0.614 for one layer against 0.612 for two.",
+  "method": "confirm one layer at seeds 43/44",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run8_reinit_confirmation.log",
+      "sha256": "c6a1e1752712a2622a76d191bfc35b8e7c58f05db0ea57b9bafb033e6018a733",
+      "lines": 9429,
+      "metrics": [
+        {
+          "line": 2670,
+          "label": "OOF",
+          "macro_f1": 0.6026,
+          "accuracy": 0.6481,
+          "per_class_f1": {}
+        },
+        {
+          "line": 2671,
+          "label": "OOF",
+          "macro_f1": 0.6037,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 4900,
+          "label": "OOF",
+          "macro_f1": 0.6127,
+          "accuracy": 0.6564,
+          "per_class_f1": {}
+        },
+        {
+          "line": 4901,
+          "label": "OOF",
+          "macro_f1": 0.6135,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 7130,
+          "label": "OOF",
+          "macro_f1": 0.6083,
+          "accuracy": 0.6599,
+          "per_class_f1": {}
+        },
+        {
+          "line": 7131,
+          "label": "OOF",
+          "macro_f1": 0.6099,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 9359,
+          "label": "OOF",
+          "macro_f1": 0.6082,
+          "accuracy": 0.6602,
+          "per_class_f1": {}
+        },
+        {
+          "line": 9360,
+          "label": "OOF",
+          "macro_f1": 0.6093,
+          "accuracy": null,
+          "per_class_f1": {}
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

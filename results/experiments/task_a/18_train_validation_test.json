@@ -1,0 +1,22 @@
+{
+  "task": "a",
+  "run": 18,
+  "session": null,
+  "title": "Refit on train + released validation, predict the test file",
+  "notebook": "notebooks/experiments/task_a/18_train_validation_test.ipynb",
+  "script": null,
+  "status": "failed_setup",
+  "outcome": "Stopped before training: the released validation CSV was missing from a stale Kaggle clone.",
+  "method": "refit the Run 12 one-layer MuRIL + TF-IDF blend on original train plus released labelled validation, then predict the released test file",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run18_train_validation_test_failed_missing_validation.log",
+      "sha256": "267e1146c02f59512b0a063988f3e47ad8c7ffc5dbef7fe4ed003738d2ec5081",
+      "lines": 74,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

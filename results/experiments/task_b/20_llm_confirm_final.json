@@ -1,0 +1,93 @@
+{
+  "task": "b",
+  "run": 20,
+  "session": null,
+  "title": "Gemma-4-12B against MuRIL, then full fits",
+  "notebook": "notebooks/experiments/task_b/20_llm_confirm_final.ipynb",
+  "script": null,
+  "status": "completed_packaging_failed",
+  "outcome": "Gemma-4-12B x2 0.6792 against MuRIL's 0.6151 (+0.064, CI [+0.024, +0.105]), the largest Task B gain. A MuRIL blend added 0.003, inside noise. The packaging cell looked for the wrong file name.",
+  "method": "Gemma-4-12B QLoRA vs the Run 11 MuRIL recipe on the 530-row holdout, then full fits on 3,532 rows",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run20_gemma12b_holdout_full.log",
+      "sha256": "e4e17385e01ed36ba384de6a07eab0208981687893e24c4cfcccc47ff9584bfd",
+      "lines": 730,
+      "metrics": [
+        {
+          "line": 706,
+          "label": "MuRIL (Run 11 recipe)",
+          "macro_f1": 0.6151,
+          "accuracy": 0.6509,
+          "per_class_f1": {
+            "Gender": 0.704,
+            "Geo-political": 0.642,
+            "Others": 0.5,
+            "Political": 0.789,
+            "Religion": 0.672,
+            "Violence": 0.383
+          }
+        },
+        {
+          "line": 707,
+          "label": "gemma-4-12b seed 42",
+          "macro_f1": 0.6566,
+          "accuracy": 0.7057,
+          "per_class_f1": {
+            "Gender": 0.769,
+            "Geo-political": 0.657,
+            "Others": 0.513,
+            "Political": 0.812,
+            "Religion": 0.779,
+            "Violence": 0.41
+          }
+        },
+        {
+          "line": 709,
+          "label": "gemma-4-12b seed 43",
+          "macro_f1": 0.6613,
+          "accuracy": 0.7094,
+          "per_class_f1": {
+            "Gender": 0.77,
+            "Geo-political": 0.62,
+            "Others": 0.533,
+            "Political": 0.812,
+            "Religion": 0.797,
+            "Violence": 0.436
+          }
+        },
+        {
+          "line": 711,
+          "label": "gemma-4-12b, 2 seed(s)",
+          "macro_f1": 0.6792,
+          "accuracy": 0.7283,
+          "per_class_f1": {
+            "Gender": 0.793,
+            "Geo-political": 0.712,
+            "Others": 0.566,
+            "Political": 0.806,
+            "Religion": 0.788,
+            "Violence": 0.41
+          }
+        },
+        {
+          "line": 712,
+          "label": "ensemble 50/50",
+          "macro_f1": 0.6825,
+          "accuracy": 0.7302,
+          "per_class_f1": {
+            "Gender": 0.787,
+            "Geo-political": 0.701,
+            "Others": 0.594,
+            "Political": 0.821,
+            "Religion": 0.787,
+            "Violence": 0.405
+          }
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

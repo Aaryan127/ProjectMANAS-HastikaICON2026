@@ -1,0 +1,53 @@
+{
+  "task": "a",
+  "run": 26,
+  "session": null,
+  "title": "Gemma TAPT: holdout comparison",
+  "notebook": "notebooks/experiments/task_a/26_gemma_tapt.ipynb",
+  "script": null,
+  "status": "partial_failure",
+  "outcome": "The base arm scored 0.8610 (two seeds). TAPT ran out of GPU memory and its retry failed on an argument TAPT did not accept, so TAPT was not measured here.",
+  "method": "TAPT: LoRA next-token pretraining on training text + external corpus, then classification",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run26_gemma_tapt_holdout.log",
+      "sha256": "f267fa87436f5eb37f8336b77448138098d871c6277f0d0f99d79f96b728fea4",
+      "lines": 487,
+      "metrics": [
+        {
+          "line": 472,
+          "label": "base seed 42",
+          "macro_f1": 0.8563,
+          "accuracy": 0.8563,
+          "per_class_f1": {
+            "Non-Hate": 0.856,
+            "Hate": 0.857
+          }
+        },
+        {
+          "line": 474,
+          "label": "base seed 43",
+          "macro_f1": 0.8573,
+          "accuracy": 0.8573,
+          "per_class_f1": {
+            "Non-Hate": 0.859,
+            "Hate": 0.856
+          }
+        },
+        {
+          "line": 476,
+          "label": "base, 2 seed(s)",
+          "macro_f1": 0.861,
+          "accuracy": 0.861,
+          "per_class_f1": {
+            "Non-Hate": 0.862,
+            "Hate": 0.86
+          }
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

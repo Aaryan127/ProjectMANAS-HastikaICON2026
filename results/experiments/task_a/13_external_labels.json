@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 13,
+  "session": null,
+  "title": "External labels: control, mix and stage",
+  "notebook": "notebooks/experiments/task_a/13_external_labels.ipynb",
+  "script": null,
+  "status": "not_run",
+  "outcome": "External OffensEval labels: control against mixing into the folds and against a separate first stage. Never run.",
+  "method": "can the external corpus's labels be trained on? control vs mix vs stage",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

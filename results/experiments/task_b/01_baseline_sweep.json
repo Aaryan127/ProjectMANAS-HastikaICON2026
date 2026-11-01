@@ -1,0 +1,100 @@
+{
+  "task": "b",
+  "run": 1,
+  "session": null,
+  "title": "Overnight encoder and loss sweep",
+  "notebook": "notebooks/experiments/task_b/01_baseline_sweep.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Encoder and loss ideas against stock MuRIL. Only task-adaptive pretraining helped: TAPT MuRIL 0.6013 five-fold against 0.5727 for stock MuRIL (+2.9). Submitted, it scored 0.5922 on CodaBench.",
+  "method": "which encoder/loss is useful?",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run1_baseline_sweep_holdout_arms.log",
+      "sha256": "6a2249cd72e93d24afb86bd038fbf9462a4e4fca1060e1ab9f6bd53561914515",
+      "lines": 1914,
+      "metrics": [
+        {
+          "line": 15,
+          "label": "task B  5-fold OOF",
+          "macro_f1": 0.5948,
+          "accuracy": 0.6796,
+          "per_class_f1": {}
+        },
+        {
+          "line": 513,
+          "label": "holdout",
+          "macro_f1": 0.0967,
+          "accuracy": 0.1556,
+          "per_class_f1": {}
+        },
+        {
+          "line": 528,
+          "label": "holdout",
+          "macro_f1": 0.0954,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1436,
+          "label": "holdout",
+          "macro_f1": 0.5948,
+          "accuracy": 0.661,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1451,
+          "label": "holdout",
+          "macro_f1": 0.5948,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1886,
+          "label": "holdout",
+          "macro_f1": 0.5718,
+          "accuracy": 0.6229,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1901,
+          "label": "holdout",
+          "macro_f1": 0.5718,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1903,
+          "label": "work/b_abusive.log:holdout",
+          "macro_f1": 0.5718,
+          "accuracy": 0.6229,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1904,
+          "label": "work/b_abusive.log:holdout",
+          "macro_f1": 0.5718,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1905,
+          "label": "work/b_base.log:holdout",
+          "macro_f1": 0.5948,
+          "accuracy": 0.661,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1906,
+          "label": "work/b_base.log:holdout",
+          "macro_f1": 0.5948,
+          "accuracy": null,
+          "per_class_f1": {}
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

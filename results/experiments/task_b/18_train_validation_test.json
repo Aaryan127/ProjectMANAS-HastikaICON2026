@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 18,
+  "session": null,
+  "title": "Refit on train + released validation, predict the test file",
+  "notebook": "notebooks/experiments/task_b/18_train_validation_test.ipynb",
+  "script": null,
+  "status": "failed_setup",
+  "outcome": "Stopped before training: Kaggle could not clone the repository.",
+  "method": "refit the Run 11 one-layer MuRIL + R-Drop recipe on original train plus released labelled validation, then predict the released test file",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run18_train_validation_test_failed_clone.log",
+      "sha256": "b3d5f061f753e67d49181925551826c39752df034408c07cb575293541d9c2b7",
+      "lines": 47,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

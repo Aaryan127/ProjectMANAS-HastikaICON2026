@@ -1,0 +1,94 @@
+{
+  "task": "a",
+  "run": 24,
+  "session": null,
+  "title": "Gemma: four epochs against three",
+  "notebook": "notebooks/experiments/task_a/24_gemma_epochs.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Three epochs, two seeds: 0.8610 against 0.8452 for four epochs (-0.016, CI [-0.033, +0.001]). Task A keeps 3 epochs.",
+  "method": "4 epochs vs 3 on the holdout",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run24_gemma_epochs.log",
+      "sha256": "2e3b7ecc936f95e3932145532ee1e7621721a2037a435cfaf954bff95df5b9ad",
+      "lines": 768,
+      "metrics": [
+        {
+          "line": 747,
+          "label": "base seed 42",
+          "macro_f1": 0.8563,
+          "accuracy": 0.8563,
+          "per_class_f1": {
+            "Non-Hate": 0.856,
+            "Hate": 0.857
+          }
+        },
+        {
+          "line": 749,
+          "label": "base seed 43",
+          "macro_f1": 0.8573,
+          "accuracy": 0.8573,
+          "per_class_f1": {
+            "Non-Hate": 0.859,
+            "Hate": 0.856
+          }
+        },
+        {
+          "line": 751,
+          "label": "base, 2 seed(s)",
+          "macro_f1": 0.861,
+          "accuracy": 0.861,
+          "per_class_f1": {
+            "Non-Hate": 0.862,
+            "Hate": 0.86
+          }
+        },
+        {
+          "line": 752,
+          "label": "ep4 seed 42",
+          "macro_f1": 0.8461,
+          "accuracy": 0.8462,
+          "per_class_f1": {
+            "Non-Hate": 0.845,
+            "Hate": 0.847
+          }
+        },
+        {
+          "line": 754,
+          "label": "ep4 seed 43",
+          "macro_f1": 0.583,
+          "accuracy": 0.5867,
+          "per_class_f1": {
+            "Non-Hate": 0.544,
+            "Hate": 0.622
+          }
+        },
+        {
+          "line": 756,
+          "label": "ep4, 2 seed(s)",
+          "macro_f1": 0.8452,
+          "accuracy": 0.8452,
+          "per_class_f1": {
+            "Non-Hate": 0.844,
+            "Hate": 0.846
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "line": 758,
+          "label": "ep4 - base",
+          "macro_f1_difference": -0.0157,
+          "ci95": [
+            -0.0333,
+            0.0011
+          ],
+          "p_better": 0.04
+        }
+      ]
+    }
+  ]
+}

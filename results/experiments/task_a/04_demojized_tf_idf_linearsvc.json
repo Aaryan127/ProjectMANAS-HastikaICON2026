@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 4,
+  "session": null,
+  "title": "Demojized TF-IDF + LinearSVC",
+  "notebook": null,
+  "script": "python -m hastika.research.models.baseline_svm --task a --demojize",
+  "status": "completed",
+  "outcome": "Demojized TF-IDF + LinearSVC: five-fold macro-F1 0.8103, the best Task A result until Run 7.",
+  "method": null,
+  "note": "Measured with an early revision of baseline_svm.py, before duplicate removal. The current script with --demojize scores 0.8073 five-fold on the 6,401 deduplicated rows (rerun for this record); that is the SVM component used from Run 9 on.",
+  "final_ensemble_members": 0,
+  "logs": []
+}

@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 14,
+  "session": null,
+  "title": "XLM-R as a third ensemble member",
+  "notebook": "notebooks/experiments/task_a/14_third_member_blend.ipynb",
+  "script": null,
+  "status": "not_run",
+  "outcome": "XLM-R as a third ensemble member with a nested three-way blend. Never run; Run 11 had already lowered its expected value.",
+  "method": "does XLM-R as a third ensemble member help?",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

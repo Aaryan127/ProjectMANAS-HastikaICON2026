@@ -1,0 +1,70 @@
+{
+  "task": "a",
+  "run": 17,
+  "session": null,
+  "title": "Translate to English, then hateBERT",
+  "notebook": "notebooks/experiments/task_a/17_translate_to_english.ipynb",
+  "script": null,
+  "status": "completed_negative",
+  "outcome": "Translation with Sarvam-Translate kept 1% of slurs. hateBERT on the English text scored 0.7275 against MuRIL's 0.7803 (-0.053, CI [-0.078, -0.027]) and lowered every blend it joined. The SVM 0.57 + MuRIL 0.43 reference on these rows was 0.8155. The translation line was closed.",
+  "method": "translate to English (Sarvam-Translate), then hateBERT; 1,079-row holdout of train + released validation",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run17_translate_hatebert_holdout.log",
+      "sha256": "f511f1f241171374ce7326801d2102d468bf5bd465c707ce3a6d6de5f33fc01c",
+      "lines": 463,
+      "metrics": [],
+      "comparisons": [
+        {
+          "line": 449,
+          "label": "hateBERT - MuRIL",
+          "macro_f1_difference": -0.0529,
+          "ci95": [
+            -0.078,
+            -0.0268
+          ],
+          "p_better": 0.0
+        },
+        {
+          "line": 450,
+          "label": "thirds - (SVM+MuRIL)",
+          "macro_f1_difference": -0.0065,
+          "ci95": [
+            -0.0186,
+            0.0056
+          ],
+          "p_better": 0.15
+        },
+        {
+          "line": 451,
+          "label": "(SVM+hateBERT) - SVM",
+          "macro_f1_difference": -0.0194,
+          "ci95": [
+            -0.0362,
+            -0.0019
+          ],
+          "p_better": 0.02
+        },
+        {
+          "line": 452,
+          "label": "canonicalised SVM - SVM",
+          "macro_f1_difference": 0.0028,
+          "ci95": [
+            -0.0019,
+            0.0082
+          ],
+          "p_better": 0.88
+        }
+      ]
+    },
+    {
+      "log": "run17_translate_to_english_failed_ai4bharat.log",
+      "sha256": "fba3127d293b6a44d89ff310e44c52a3f2e0b443f42e4b47434f068d8445655b",
+      "lines": 218,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

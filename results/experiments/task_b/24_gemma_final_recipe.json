@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 24,
+  "session": null,
+  "title": "Gemma TAPT final recipe",
+  "notebook": "notebooks/experiments/task_b/24_gemma_final_recipe.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "TAPT (2 epochs), then four 4-epoch fits on all 3,532 rows. No run log or score was kept, so whether it ran is not known. The final ensemble uses Runs 36 and 37 instead.",
+  "method": "**TAPT final**: TAPT **2 epochs**, then four 4-epoch fits on all 3,532 rows",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 32,
+  "session": null,
+  "title": "TAPT holdout twin, regenerated variant",
+  "notebook": "notebooks/experiments/task_a/32_gemma_tapt_final_holdout.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "A regenerated version of the Run 31 holdout twin. No run log or score was kept, so whether it ran is not known.",
+  "method": "holdout twin of the TAPT submission",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

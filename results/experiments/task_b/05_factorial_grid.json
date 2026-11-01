@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 5,
+  "session": null,
+  "title": "Data-processing grid: corpus, vocabulary, auxiliary head",
+  "notebook": "notebooks/experiments/task_b/05_factorial_grid.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "TAPT corpus (Kannada only or plus Tamil/Malayalam), vocabulary extension and an auxiliary head: none helped. Vocabulary extension cost 3 to 8 points. The best cell reproduced Run 1's 0.5972 holdout.",
+  "method": "more TAPT text, vocabulary extension, auxiliary head",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

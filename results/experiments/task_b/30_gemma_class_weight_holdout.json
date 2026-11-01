@@ -1,0 +1,118 @@
+{
+  "task": "b",
+  "run": 30,
+  "session": null,
+  "title": "Square-root class weights",
+  "notebook": "notebooks/experiments/task_b/30_gemma_class_weight_holdout.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Square-root class weights 0.6822 against balanced 0.6864 (-0.004, P 0.41); one square-root seed collapsed. Balanced weights kept.",
+  "method": "compare Gemma's current balanced class weights with square-root inverse-frequency weights, two seeds each",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run30_gemma_class_weight_holdout.log",
+      "sha256": "05de5d978813aa7cf2738270a3662e272d133efc160dd68df3db2440e6c62536",
+      "lines": 336,
+      "metrics": [
+        {
+          "line": 317,
+          "label": "balanced seed 42",
+          "macro_f1": 0.6566,
+          "accuracy": 0.7057,
+          "per_class_f1": {
+            "Gender": 0.769,
+            "Geo-political": 0.657,
+            "Others": 0.513,
+            "Political": 0.812,
+            "Religion": 0.779,
+            "Violence": 0.41
+          }
+        },
+        {
+          "line": 318,
+          "label": "balanced seed 43",
+          "macro_f1": 0.6701,
+          "accuracy": 0.7151,
+          "per_class_f1": {
+            "Gender": 0.78,
+            "Geo-political": 0.676,
+            "Others": 0.555,
+            "Political": 0.802,
+            "Religion": 0.766,
+            "Violence": 0.442
+          }
+        },
+        {
+          "line": 319,
+          "label": "sqrt seed 42",
+          "macro_f1": 0.1382,
+          "accuracy": 0.4283,
+          "per_class_f1": {
+            "Gender": 0.616,
+            "Geo-political": 0.0,
+            "Others": 0.0,
+            "Political": 0.0,
+            "Religion": 0.214,
+            "Violence": 0.0
+          }
+        },
+        {
+          "line": 320,
+          "label": "sqrt seed 43",
+          "macro_f1": 0.6874,
+          "accuracy": 0.7509,
+          "per_class_f1": {
+            "Gender": 0.804,
+            "Geo-political": 0.687,
+            "Others": 0.594,
+            "Political": 0.845,
+            "Religion": 0.8,
+            "Violence": 0.394
+          }
+        },
+        {
+          "line": 322,
+          "label": "balanced, 2 seeds",
+          "macro_f1": 0.6864,
+          "accuracy": 0.7283,
+          "per_class_f1": {
+            "Gender": 0.791,
+            "Geo-political": 0.73,
+            "Others": 0.543,
+            "Political": 0.815,
+            "Religion": 0.788,
+            "Violence": 0.452
+          }
+        },
+        {
+          "line": 323,
+          "label": "sqrt, 2 seeds",
+          "macro_f1": 0.6822,
+          "accuracy": 0.7509,
+          "per_class_f1": {
+            "Gender": 0.805,
+            "Geo-political": 0.677,
+            "Others": 0.591,
+            "Political": 0.839,
+            "Religion": 0.8,
+            "Violence": 0.381
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "line": 325,
+          "label": "sqrt mean - balanced mean        diff",
+          "macro_f1_difference": -0.0042,
+          "ci95": [
+            -0.0392,
+            0.03
+          ],
+          "p_better": 0.41
+        }
+      ]
+    }
+  ]
+}

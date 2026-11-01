@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 7,
+  "session": null,
+  "title": "One against two reinitialized layers",
+  "notebook": "notebooks/experiments/task_b/07_reinit_one_layer.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Five-fold, seed 42: one reinitialized layer 0.6102 against two layers 0.6013.",
+  "method": "one versus two reinitialized layers",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

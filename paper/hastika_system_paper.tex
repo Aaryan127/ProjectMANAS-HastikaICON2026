@@ -1,0 +1,760 @@
+% ACL 2023 format: ACL2023.sty and acl_natbib.bst from the ACL 2023 template (in this folder).
+% Camera-ready mode; for an anonymous review copy use \usepackage{ACL2023}.
+% Keep pdfLaTeX compatibility.
+\pdfoutput=1
+\documentclass[11pt]{article}
+\usepackage{ACL2023}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amsmath}
+
+\newcommand{\taska}{Task A}
+\newcommand{\taskb}{Task B}
+
+\title{Reading Romanized Kannada: Task-Adaptive Pretraining and Quantized Gemma Ensembles for Kannada--English Hate Speech Detection}
+\author{Robin Punnen Alex \and Aaryan Ganesh Salunke \\
+  Manipal Institute of Technology, Manipal Academy of Higher Education, Manipal, India \\
+  \texttt{robinalexpnn@gmail.com}, \texttt{aaryansalunke12@gmail.com}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We describe our systems for the two HASTIKA-ICON-2026 tasks on Kannada--English
+YouTube comments: hate-speech detection (\taska{}) and six-way categorization of
+hateful comments (\taskb{}). Most of the Kannada in these comments is typed in
+Latin script, with no fixed spelling. We tested character n-gram SVMs, MuRIL with
+task-adaptive pretraining (TAPT), translation into English, and four decoder
+language models. Our systems fine-tune Gemma-4-12B, quantized to 4 bits to fit a
+single 16\,GB T4 GPU, with LoRA adapters and a linear head on the last
+prompt token. On a held-out 15\% of the labelled data, two such models score
+0.8610 macro-F1 on \taska{} (character n-gram SVM: 0.8117) and 0.6872 on \taskb{}
+(best MuRIL system: 0.6151). Adding TAPT and averaging models from several TAPT
+runs reached 0.8721 and 0.7056. The submitted systems average 12 and 8 such
+models trained on all labelled data; the organizers report 0.8250 and 0.7367
+macro-F1 for them on the official test sets. Code, recipes and a reproduction
+package are available at
+\url{https://github.com/Aaryan127/ProjectMANAS-HastikaICON2026}.
+\end{abstract}
+
+\section{Introduction}
+HASTIKA-ICON-2026 \citep{hastika-2026-starting-kit} asks participants to
+classify Kannada--English YouTube comments. \taska{} labels a comment Hate or Non-Hate. \taskb{} assigns each
+hateful comment to one of six categories: Gender, Geo-political, Others,
+Political, Religion or Violence. Most Kannada in the comments is typed in Latin
+script, and the spelling varies from writer to writer: ``don't know'' appears as
+\textit{gottilla}, \textit{gothila}, \textit{gothilla}, \textit{gotila} and
+\textit{gotilla}. A word-level model sees five unrelated features, and a subword
+tokenizer may split each spelling into different pieces. Representing romanized
+Kannada is therefore the central difficulty of both tasks. Hate-speech
+detection is well studied in English \citep{davidson-etal-2017-automated,
+fortuna-nunes-2018-survey} and in code-mixed text \citep{bohra-etal-2018-dataset},
+including Kannada--English \citep{hande-etal-2020-kancmd,
+chakravarthi-etal-2021-findings-shared, chakravarthi-etal-2022-dravidiancodemix}.
+
+One technique runs through the paper. \emph{Task-adaptive pretraining} (TAPT;
+\citealp{gururangan-etal-2020-dont}) continues a pretrained model's own training
+objective on the unlabelled text of the task before it sees any labels:
+masked-token prediction for an encoder such as MuRIL, next-token prediction for a
+decoder such as Gemma. A model pretrained mostly on standard text has seen little
+Kannada written as these commenters write it; TAPT adapts it to that register
+before supervised training.
+
+\paragraph{\taska{}.} A TF-IDF SVM performed at least as well as a fine-tuned
+MuRIL \citep{khanuja-etal-2021-muril}, a model pretrained on Indian languages
+including transliterated text, and remained a component of every \taska{} system
+before the move to decoder models. A tuned MuRIL blended with the SVM reached
+0.8188 in the validation phase. Translation into English removed most of the
+abusive content and was abandoned. The largest improvement came from a decoder
+language model, Gemma-4-12B \citep{gemma-team-2026-gemma4}, fine-tuned in 4 bits:
+0.043 above the SVM on our holdout, and 0.8721 with TAPT ensembles.
+
+\paragraph{\taskb{}.} Error analysis showed that most \taskb{} errors depend on
+\emph{who} a comment targets. Of the changes we
+evaluated on MuRIL, three helped: TAPT, re-initializing one top layer, and R-Drop.
+Together they were our best system before Gemma (0.6410 in the validation
+phase). Gemma then gained 0.064 over that recipe on the holdout, and TAPT
+ensembles of Gemma reached 0.7056.
+
+Our submissions average Gemma classifiers trained after several independent
+TAPT runs: 12 for \taska{} and 8 for \taskb{}. Appendix~\ref{app:timeline}
+summarizes the development history, including negative results.
+
+\section{Task and Data}
+\label{sec:data}
+The comments come from the HASTIKA corpus \citep{kavatagi-rachh-2025}, released
+for the shared task \citep{hastika-2026-starting-kit}, and also contain English, some Kannada script, emoji, URLs, user mentions and elongated
+words. The organizers released a training set and, later, the labels of the
+validation set. For each task we merged the two and removed duplicates
+(Section~\ref{sec:prep}), leaving 7,193 of 7,252 comments for \taska{} (3,663
+Non-Hate, 3,530 Hate) and 3,532 of 3,554 for \taskb{} (Gender 1,522, Political
+624, Others 502, Religion 429, Violence 248, Geo-political 207). From each merged
+set we drew one stratified 15\% holdout with scikit-learn
+\citep{pedregosa-etal-2011-scikit}, 1,079 comments for \taska{} and 530 for
+\taskb{}; the \taskb{} holdout has only 31 Geo-political and 37 Violence
+comments. The test sets contain 806 and 396 comments; the final evaluation
+scored only the final portion of each.
+
+\section{Evaluation}
+\label{sec:eval}
+We report macro-F1, which gives Geo-political (6\% of \taskb{}) the same weight
+as Gender (43\%). Before the validation labels were released, we compared systems
+by five-fold cross-validation on the deduplicated training data (6,401 and 3,143
+comments), screened \taskb{} ideas on one 15\% split (472 comments), and
+submitted to the validation phase on CodaBench (806 and 395 comments, labels
+hidden). Afterwards we used the fixed holdouts of Section~\ref{sec:data}.
+
+We picked each holdout's comments at random once, with a fixed random seed, and
+never re-picked them. Every later experiment was tested on exactly the same
+comments, so a difference between two systems cannot come from one of them
+getting an easier set. Each run checks a fingerprint (a hash) of the holdout's
+comment IDs and stops if it does not match. Scores from different protocols come
+from different comments and are not comparable, so we name the protocol with
+every number.
+
+To tell whether one system really beats another, we resample the holdout
+comments with replacement 5,000 times, score both systems on each resample, and
+take the middle 95\% of the differences as a 95\% interval (a paired bootstrap;
+\citealp{efron-1979-bootstrap, koehn-2004-statistical,
+berg-kirkpatrick-etal-2012-empirical, dror-etal-2018-hitchhikers}).
+If the whole interval is above zero, the gain is unlikely to be due to chance.
+
+Holdout models were trained on the other 85\%. For the submission we retrained
+the chosen setup on all labelled data. Those models have seen every labelled
+comment, so nothing is left to test them on locally: their only score is the
+one the organizers report.
+
+\section{System Development}
+\label{sec:dev}
+
+\subsection{Preprocessing}
+\label{sec:prep}
+The released files had been saved as UTF-8 but read back as Latin-1 (mojibake).
+An emoji or a Kannada letter takes two to four bytes in UTF-8; read as Latin-1,
+each byte becomes a separate meaningless character. We reverse that step
+(encode as Latin-1, decode as UTF-8), let \texttt{ftfy} \citep{speer-2019-ftfy}
+repair the rest, unescape
+HTML entities, remove line-break tags, replace URLs and mentions with
+\texttt{<url>} and \texttt{<user>}, and collapse whitespace. Shortening elongated
+words (\textit{sooooo}) did not help the SVM (0.8003 against 0.8032), and we never
+shorten to one letter, since a doubled letter can distinguish two Kannada words.
+
+MuRIL's WordPiece \citep{wu-etal-2016-google, devlin-etal-2019-bert} vocabulary
+has almost no emoji, and WordPiece maps the
+\emph{whole} word containing an unknown character to \texttt{[UNK]}, so a slur
+written against an emoji vanished with it. For MuRIL and the \taska{} SVM we
+replace emoji with their English names, using the \texttt{emoji} package
+\citep{kim-wurster-emoji}. This cut MuRIL's unknown-token rate from
+0.79\% to 0.05\% and raised MuRIL from 0.7937 to 0.8023 on a validation split, and
+an SVM from 0.8039 to 0.8103 five-fold. Gemma needs none of this: its SentencePiece
+tokenizer \citep{kudo-richardson-2018-sentencepiece} has 262k entries and
+byte-level encodings \citep{gemma-team-2026-gemma4}, so an emoji never becomes
+unknown. Gemma sees emoji unchanged.
+
+Some comments recur under different IDs (35 groups in the \taska{} training file,
+12 in \taskb{}). Left in, a duplicate counts twice in the loss and can sit on both
+sides of a split. We keep one copy when all copies agree and drop the group when
+they disagree (10 comments in \taska{}, 6 in \taskb{}): the annotators gave the
+same text two labels. Test files are not deduplicated.
+
+\subsection{What the data told us about the language}
+\label{sec:language}
+Before modelling we read comments and counted things. Four observations shaped
+the rest of the work.
+
+\paragraph{Grammar fragments the vocabulary.} 74.4\% of \taska{} word types occur
+once. We first blamed spelling, which back-transliteration might fix. But 65.2\%
+of the once-seen words share a five-character stem with another word, and the
+largest clusters are verb paradigms (106 forms of \textit{matha-}, 86 of
+\textit{madid-}, 74 of \textit{matad-}, from \textit{maadu} ``do'' and
+\textit{maataadu} ``speak''). Kannada is agglutinative \citep{sridhar-1990-kannada}, and script conversion
+cannot merge \textit{maadtha} with \textit{maadthaare}. Simulating the merging a
+transliterator performs removed 10.6\% of word types and gained 0.001, so we never
+built one. The same reasoning ruled out stemming (wordpieces already split
+\textit{madthare} into stem and suffixes) and stopword removal (the 60 most
+frequent words include \textit{bjp}, \textit{congress} and \textit{desha},
+``country'').
+
+\paragraph{Most errors contain no slur.} 18\% of \taska{} comments contain a slur,
+and an early SVM classified those with 91.6\% accuracy; 92\% of its errors were in comments with
+no profanity. A held-out comment's nearest training neighbour has a median
+cosine similarity of only 0.27. Features derived from word lists would
+therefore mostly mark comments that are already classified correctly.
+
+\paragraph{\taskb{} depends on the target.} On the SVM, Violence lost 103 of its 221
+training comments to Gender and Others lost 282 of 447. Gendered slurs
+(\textit{sule}, \textit{boli}) are directed at TV channels, cricketers and
+politicians, so the lexical cue indicates Gender while the label follows the
+target. The annotation convention adds a further complication: a comment with a gendered slur is labelled
+Gender whoever the target is.
+
+\paragraph{Each class has a marker.} Political, Religion and Geo-political are
+decided by closed sets of names; a name list fitted inside each fold finds them
+at four to nine times their base rate. Violence is a speech act: the
+necessitative \textit{-beku} (``must'') on a violent verb, as in
+\textit{saayisbeku} (``must be killed''), raises the share of Violence from 0.070
+to 0.184. A violent word's meaning depends on its company: among 420 comments
+containing one, Others is the label 27\% of the time when a media outlet is named
+and 6\% when no target is named.
+
+These observations explain many results below. Name and topic tags fire mostly
+on Political and Religion, already the strongest classes, and they did not help.
+What helped changed how the text is represented.
+
+\subsection{Character n-gram SVM}
+A linear SVM \citep{cortes-vapnik-1995-support, joachims-1998-text} over TF-IDF
+features \citep{sparck-jones-1972-statistical}, with balanced class weights
+(LIBLINEAR via scikit-learn; \citealp{fan-etal-2008-liblinear,
+pedregosa-etal-2011-scikit}), was our first floor. On \taska{} five-fold macro-F1 was 0.8152 with character 2--5-grams within
+word boundaries, 0.8065 with word unigrams and bigrams added and 0.7585 with
+words alone: character n-grams, known to work well for abusive language
+\citep{waseem-hovy-2016-hateful, mehdad-tetreault-2016-characters}, let spellings
+and inflections share features (\textit{gottilla} and \textit{gotilla} share \textit{got}, \textit{til},
+\textit{ill}, \textit{lla}). On \taskb{} a word and character SVM scored 0.5948.
+Fourteen hyperparameter settings stayed within 0.005 of that. Calibrating its
+scores with a sigmoid \citep{platt-2000-probabilistic} cost three points, because calibration pulls scores toward the class
+priors and undoes the balanced weights the small classes depend on.
+
+\subsection{MuRIL}
+\label{sec:muril}
+MuRIL is a BERT-base encoder \citep{devlin-etal-2019-bert} pretrained on Indian
+languages, with transliterated
+text, and therefore appeared well suited to this data. Fine-tuned, it scored 0.7932 five-fold on
+\taska{}, below a word and character SVM on the same folds (0.8073). The tokenizer
+is a likely reason: \textit{sule} becomes \textit{su}\,+\,\textit{\#\#le} and its
+variant \textit{soole} becomes \textit{so}\,+\,\textit{\#\#ole}, with no pieces in
+common. Only 24.9\% of \taska{} word types are one wordpiece, and the corpus uses
+4.47\% of MuRIL's vocabulary.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Choice & Reason \\
+\midrule
+emoji as names & WordPiece turns a word with an emoji into \texttt{[UNK]} \\
+mean + max pool & the signal is often a single slur token, which \texttt{[CLS]} pooling can dilute \\
+re-init top layers & top layers are tuned to masked-word prediction and transfer worst from small data \citep{zhang-etal-2021-revisiting} \\
+LR decay 0.9 & protects lower layers' knowledge of transliterated text \citep{howard-ruder-2018-universal, sun-etal-2019-fine} \\
+FGM, $\epsilon=1$ & three in four word types are seen once and overfit easily \citep{miyato-etal-2017-adversarial} \\
+EMA 0.999 & small-data fine-tuning is noisy step to step \citep{polyak-juditsky-1992-acceleration} \\
+6 epochs & XLM-R needed two to leave the all-one-class solution \\
+smoothing 0.05 & noisy labels; some identical comments carry both \citep{szegedy-etal-2016-rethinking} \\
+\bottomrule
+\end{tabularx}
+\caption{The MuRIL recipe. Most choices were reasoned from the data and
+not ablated one by one.}
+\label{tab:muril}
+\end{table}
+
+\paragraph{Recipe.} Each choice answered something in the data
+(Table~\ref{tab:muril}) and stayed unless a measurement said otherwise. CPU work
+before the first GPU sweep also exposed a bug: our weight averaging (EMA) was not
+bias-corrected as Adam's moments are \citep{kingma-ba-2015-adam}, so after a \taskb{} fold's 942 steps, 39\% of every evaluated
+checkpoint was still the random initialization.
+
+\paragraph{Re-initializing layers.} We began with the top \emph{two} layers
+re-initialized, following \citet{zhang-etal-2021-revisiting}. On \taskb{} one
+layer beat two (0.6102 against 0.6013 five-fold), with the gains in the hardest
+classes (Others +0.022, Violence +0.024), and two more seeds agreed. Removing
+re-initialization was clearly worse (0.584 against 0.614 for two averaged
+seeds). On \taska{} one layer did not help (0.8204 against 0.8213) and two were
+kept. One possible reason, untested, is that a re-initialized layer is learned
+from the labels alone, and \taskb{} has half as many.
+
+\paragraph{TAPT.} MuRIL split \taskb{} comments into 2.28 wordpieces per word, a
+sign it had rarely seen this register. Masked-word TAPT on the training comments
+and the external corpus of Section~\ref{sec:tapt} gained 0.029 five-fold (0.6013
+against 0.5727), the only idea in our first sweep that beat both stock MuRIL and
+the SVM. It also corrected a systematic weakness: the SVM predicted Violence for only 6
+of 395 validation comments against a 7\% prior, the TAPT model for 24. TAPT read the
+text, not the labels, of every training comment, including the fold being
+scored, which favours it somewhat.
+
+\paragraph{R-Drop.} R-Drop \citep{liang-etal-2021-rdrop} passes each batch through
+the model twice with different dropout masks and adds the symmetric KL
+divergence between the predictions (weight 0.5), asking for the same answer
+whichever neurons are dropped. On stock MuRIL it lost (0.5614 against 0.5727
+five-fold), but on TAPT MuRIL with one re-initialized layer it scored 0.6410 in
+the validation phase against 0.6299 without it. One score on 395 comments has a
+standard deviation of about three points, so neither result settles it; we kept
+R-Drop because it was in our best submission.
+
+\paragraph{What did not work.} \emph{Focal loss} \citep{lin-etal-2017-focal},
+aimed at the 17\% of \taskb{} comments with competing topic cues, lost 0.016; we
+think many ``hard'' comments here are contestable, and focal loss pushes toward
+them. \emph{Vocabulary extension} cost 3--8 points: new embeddings cannot be
+learned from three thousand comments. \emph{Tamil and Malayalam text} (about
+58,000 comments) in TAPT cost 0.011: more text helps only if it is the same kind
+of text. An \emph{auxiliary violence head} cost 0.006. \emph{Other encoders}:
+with almost no Kannada script in the corpus, Latin-script models seemed worth
+trying, but XLM-R \citep{conneau-etal-2020-unsupervised}, HingRoBERTa
+\citep{nayak-joshi-2022-l3cube} and an abuse-tuned MuRIL \citep{das-etal-2022-data}
+all scored below MuRIL,
+and mDeBERTa \citep{he-etal-2023-debertav3} collapsed. \emph{Decision rules}
+fitted on predictions lost their nested checks: four \taskb{} models blended to
+0.6032 with weights searched on the scored rows, but 0.5925 with weights refitted
+out of fold, below the best member (0.5979). \emph{Synthetic comments} added
++0.003, inside noise, and a linear model told them from real ones at an AUC of
+0.942, separating them by the generator's lexical choices.
+
+\paragraph{\taska{} blends.} Blending MuRIL with the SVM added 0.016 nested five-fold
+(0.8230 against 0.8073), but scored 0.7890 in the validation phase, below MuRIL
+alone (0.8163). Refitting both on all training data gave 0.8187, and a variant
+with one re-initialized layer tied at 0.8188. A frozen MuRIL with an RBF SVM
+scored about 0.71, and a binary task shows why such a model cannot help a blend:
+on the 184 of 806 comments where it disagreed with our best system it was right
+24\% of the time, so overruling the stronger model would be wrong three times in
+four. A character-only SVM as a third member gave 0.8250 nested, against 0.8184
+for the best single model. For Table~\ref{tab:results} the \taska{} reference is
+a 0.57/0.43 SVM and MuRIL blend; the \taskb{} reference retrains the 0.6410
+recipe (eight epochs of TAPT, six of fine-tuning, five seeds) on the holdout
+split.
+
+\begin{table}[!htb]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}Xlrl@{}}
+\toprule
+Change & Task & $\Delta$ & Prot. \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Helped}} \\
+SVM: character n-grams only & A & +0.009 & 5f \\
+SVM: emoji as names & A & +0.006 & 5f \\
+MuRIL: emoji as names & A & +0.009 & sp \\
+MuRIL: TAPT & B & +0.029 & 5f \\
+MuRIL: re-init 1 layer, not 0 & B & +0.030 & 5f \\
+MuRIL: re-init 1 layer, not 2 & B & +0.009 & 5f \\
+MuRIL: R-Drop on TAPT MuRIL & B & +0.011 & val \\
+Blend of SVM and MuRIL & A & +0.016 & 5f \\
+Char SVM as third member & A & +0.007 & 5f \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Did not help}} \\
+Synthetic comments & A & +0.003 & 5f \\
+Transliteration-like merge & A & +0.001 & 5f \\
+MuRIL: re-init 1 layer, not 2 & A & $-0.001$ & 5f \\
+Focal loss & B & $-0.016$ & 5f \\
+R-Drop on stock MuRIL & B & $-0.011$ & 5f \\
+Auxiliary violence head & B & $-0.006$ & sp \\
+Vocabulary extension & B & $-0.032$ & sp \\
+Tamil and Malayalam TAPT text & B & $-0.011$ & sp \\
+Abuse-tuned MuRIL warm start & B & $-0.023$ & sp \\
+XLM-R instead of MuRIL & B & $-0.039$ & sp \\
+HingRoBERTa instead of MuRIL & B & $-0.027$ & sp \\
+SVM: entity and topic tags & B & $-0.007$ & 5f \\
+SVM: per-class decision weights & B & $-0.009$ & 5f \\
+Frozen MuRIL + RBF SVM & A & $-0.11$ & val \\
+Translation + hateBERT & A & $-0.053$ & HO \\
+\bottomrule
+\end{tabularx}
+\caption{Changes measured before Gemma (macro-F1 difference from the same system
+without the change; encoder swaps against stock MuRIL). \emph{5f}: five-fold,
+nested for blends. \emph{Sp}: one 472-comment split, standard deviation about
+0.027. \emph{Val}: validation phase, one submission. \emph{HO}: fixed
+holdout. Mostly single runs; under about 0.01 is a tie.}
+\label{tab:dev}
+\end{table}
+
+\subsection{Translation into English}
+The organizers' published pipeline\footnote{\texttt{github.com/shankarb14/SLM-Impact}}
+transliterates comments into Kannada script with IndicXlit
+\citep{madhani-etal-2023-aksharantar} and translates them with IndicTrans2
+\citep{gala-etal-2023-indictrans2}. Translation would remove the spelling problem
+and open English abuse models, so we evaluated it, first checking whether slurs
+survived translation, with a slur list that tolerates spelling variants (phonetic skeletons,
+bounded edit distance, compound splitting). IndicTrans2 failed to install on
+Kaggle, so we used Sarvam-Translate\footnote{\texttt{sarvamai/sarvam-translate}}
+and fine-tuned hateBERT \citep{caselli-etal-2021-hatebert} on the output. Only
+1\% of 300 slur-bearing comments kept an abusive term: outputs either echoed the
+input or were fluent and unrelated (\textit{Paapa how she matadtale with avar
+tayi} became ``How she killed her uncle by eating him''). hateBERT scored 0.7275
+on the \taska{} holdout, 0.053 below MuRIL ([$-0.078$, $-0.027$]), and lowered
+every blend it joined. The spelling-tolerant slur list itself gave the SVM a small,
+unconfirmed +0.003.
+
+\subsection{Choosing a large language model}
+TAPT and layer re-initialization both changed the encoder's weights, which we
+took as a sign that the representation was the bottleneck. To choose a decoder
+without labels, we measured how well each model predicts 600 unlabelled training
+comments in bits per character, which unlike per-token perplexity is comparable
+across tokenizers: Gemma-4-12B 3.011, Sarvam-1\footnote{\texttt{sarvamai/sarvam-1}}
+3.081, Qwen3-8B-Base \citep{yang-etal-2025-qwen3} 3.192, Gemma-4-E4B 4.295. On the
+\taskb{} holdout split Sarvam-1 (2B) scored 0.5567, 0.058 below MuRIL, while two
+averaged Gemma-4-12B models scored 0.6792, 0.064 above it. Gemma was chosen by a
+screen that saw no labels, so this gain does not result from selecting the best
+of several fine-tuned candidates.
+
+\section{Final System}
+\label{sec:final}
+
+\subsection{Gemma-4-12B classifier}
+\paragraph{Why 4-bit quantization.} We trained on Kaggle's free GPUs: two NVIDIA
+T4 cards per session, about 15\,GB each, sessions of at most 12 hours and about
+30 GPU-hours a week. A 12B model in 16-bit floats needs about 24\,GB for its
+weights alone. In 4 bits the weights take about a quarter of that. We use QLoRA
+\citep{dettmers-etal-2023-qlora}: the backbone is frozen in 4-bit NF4 with double
+quantization, and only LoRA adapters \citep{hu-etal-2022-lora} (rank 16,
+$\alpha=32$, dropout 0.05, on all attention and MLP projections) and the head are
+trained, with gradient checkpointing \citep{chen-etal-2016-training}, in PyTorch,
+Transformers, PEFT and bitsandbytes \citep{paszke-etal-2019-pytorch,
+wolf-etal-2020-transformers, mangrulkar-etal-2022-peft, dettmers-etal-2022-llmint8}.
+Our \taskb{} holdout fits peaked at 10.0\,GB. Gemma-4 26B and 31B do not
+fit a T4 even in 4 bits.
+
+\paragraph{Gemma as an encoder.} Each comment goes into a short prompt ending in a
+question: \texttt{Kannada-English (romanized) YouTube comment: \{comment\}}, a line
+break, and \texttt{Is this hate speech (Hate or Non-Hate)?:}; the \taskb{} prompt
+calls the comment hateful and lists the six categories. In a decoder only the
+last position has seen the whole input, so we classify the final-layer hidden
+state $h_i$ of the last non-padding token:
+$p_i = \mathrm{softmax}(W\,\mathrm{Dropout}(h_i) + b)$, with $W, b$ trained from
+scratch and dropout 0.1 \citep{srivastava-etal-2014-dropout}. A head gives a probability per class, which our
+ensembles average. The other settings (AdamW, \citealp{loshchilov-hutter-2019-decoupled}; weight
+decay 0.01) and the reason for each:
+
+\smallskip
+\noindent{\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Setting & Reason \\
+\midrule
+short prompt & read at every step; a longer first version doubled the input; organizer definitions tied (0.6840 vs 0.6830) \\
+LoRA on all layers & needed for QLoRA to match full fine-tuning \citep{dettmers-etal-2023-qlora}; rank sweep not run \\
+LR $10^{-4}$, head $5\!\times\!10^{-4}$ & the head starts from random weights; $2\!\times\!10^{-4}$ not run \\
+balanced weights & macro-F1 counts small classes fully; square-root weights scored lower (0.6822 vs 0.6864) \\
+smoothing 0.05 & contestable labels, as for MuRIL \\
+3 / 4 epochs & 4 overfit \taska{} ($-0.030$), helped \taskb{} (+0.008) \\
+batch $8\times2$ & limited by memory; length-bucketed, 3.5$\times$ less padding \\
+cosine, 6\%, clip 1 & from MuRIL \citep{loshchilov-hutter-2017-sgdr}; clipping \citep{pascanu-etal-2013-difficulty} guards fp16 training \citep{micikevicius-etal-2018-mixed}, as T4s lack bf16 \\
+320 tokens & 128 already cover over 99\% of comments \\
+\bottomrule
+\end{tabularx}}
+\smallskip
+
+
+Re-initialization and emoji replacement were MuRIL fixes and were not carried
+over: Gemma's tokenizer handles emoji, and LoRA leaves the pretrained weights
+frozen. R-Drop (weight 0.5) is used in some members. Four \taska{} fits on all
+7,193 comments, two at a time on two GPUs, took 5.6 hours without TAPT and 7.6
+with it. In four runs a model collapsed onto one class, a known failure of fine-tuning
+on small data \citep{dodge-etal-2020-fine, mosbach-etal-2021-stability}, first in
+our first Gemma run, where a holdout model predicted Non-Hate for everything. Since then, after
+epoch 1 the model predicts 400 training comments, and if more than 95\% go to one
+class with a prior under 90\%, the run restarts with a new seed. No collapsed
+model is in any ensemble.
+
+\begin{table}[!htb]
+\centering
+\small
+\begin{tabular}{@{}lcr@{}}
+\toprule
+System & Models & Macro-F1 \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{\taska{} holdout: 1,079 comments, trained on 6,114}} \\
+Character n-gram SVM & -- & 0.8117 \\
+SVM + MuRIL blend & -- & 0.8155 \\
+Gemma & 1 & 0.8563 \\
+Gemma & 2 & 0.8610 \\
+Gemma & 3 & 0.8582 \\
+Gemma + TAPT run 1$^\dagger$ & 4 & 0.8702 \\
+Gemma + TAPT run 2$^\dagger$ & 2 & 0.8619 \\
+\quad + 2 R-Drop models$^\dagger$ & 4 & 0.8721 \\
+Gemma + TAPT run 3$^\dagger$ & 2 & 0.8675 \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{\taskb{} holdout: 530 comments, trained on 3,002}} \\
+MuRIL + TAPT & 5 & 0.6151 \\
+Gemma, 3 epochs & 2 & 0.6792 \\
+Gemma, 4 epochs & 2 & 0.6872 \\
+Gemma + TAPT run 1 & 2 & 0.6741 \\
+\quad R-Drop instead$^\dagger$ & 2 & 0.7026 \\
+\quad both pairs together & 4 & 0.6966 \\
+Gemma + TAPT run 2$^\dagger$ & 2 & 0.7056 \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{Official test, reported by the organizers}} \\
+\taska{} submission (acc.\ 0.8784) & 12 & 0.8250 \\
+\taskb{} submission (acc.\ 0.7879) & 8 & 0.7367 \\
+\bottomrule
+\end{tabular}
+\caption{Holdout and official macro-F1. Holdout models were trained on the other
+85\%; indented rows reuse the adapter above. \taska{} Gemma models train for
+three epochs, \taskb{} for four unless stated. $^\dagger$Holdout counterpart of a
+submitted group. The official evaluation scored the final portion of each test
+file; submitted models were trained on all labelled data.}
+\label{tab:results}
+\end{table}
+
+\subsection{Task-adaptive pretraining}
+\label{sec:tapt}
+For Gemma, TAPT is next-token LoRA training on the training comments, without
+labels, plus 3,247 Kannada YouTube comments from the DravidianLangTech-2021
+offensive-language data \citep{hande-etal-2020-kancmd,
+chakravarthi-etal-2021-findings-shared}, after
+removing any that match a HASTIKA comment. That corpus is romanized like HASTIKA,
+although its card says Kannada script. Holdout and test comments are never used.
+The classifier starts from the TAPT adapter. \taska{} uses one TAPT epoch (the
+language-model loss fell from 7.5 to 5.6), \taskb{}, with half the data, two. The
+logits over Gemma's 262k-word vocabulary do not fit beside the model, so we apply
+the frozen output layer to 16 positions at a time on a detached copy of the
+hidden states, accumulate their gradient, and run one backward pass through the
+decoder, with the same gradient as the unchunked loss. Each micro-batch has one
+128-token sequence, with 16 accumulation steps. \taska{} TAPT took 125 minutes,
+peaking at 10.4\,GB.
+
+\subsection{Ensembles}
+\label{sec:ensembles}
+A submitted system adds up its members' class probabilities with equal weight
+and predicts the class with the highest total; no weights or thresholds were
+tuned, so the holdout had no say in how members combine. Members come in
+\emph{groups}: one TAPT run, producing one adapter, followed by two or four
+classifiers that start from it with different seeds. Classifiers in a group share
+an adapter and make similar mistakes; classifiers from different groups disagree
+more, which is what averaging needs \citep{dietterich-2000-ensemble,
+lakshminarayanan-etal-2017-simple}. Some groups use R-Drop, whose models were
+not better alone but raised the average when added (Section~\ref{sec:results}).
+Our rule, fixed in advance, was to average every TAPT model we had trained on all
+labelled data:
+
+\smallskip
+\noindent{\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Group & \taska{} & \taskb{} \\
+\midrule
+TAPT, one adapter & 4 & -- \\
+TAPT + R-Drop, one adapter & 2 & 2 \\
+TAPT bag: three adapters, two each & 6 & 6 \\
+\midrule
+Members (TAPT runs) & 12 (5) & 8 (4) \\
+\bottomrule
+\end{tabular}}
+
+\section{Results}
+\label{sec:results}
+
+
+\paragraph{Official results.} The organizers report 0.8250 macro-F1 (accuracy
+0.8784) on \taska{} and 0.7367 (0.7879) on \taskb{} (Table~\ref{tab:results}).
+These are their figures; without test labels we cannot recompute them. Our
+holdout macro-F1 on \taska{} was higher than the reported score: 0.8721 for the
+best ensemble, 0.047 above it, and every Gemma model and ensemble, single models
+included, scored above it. On \taskb{} the reported score is 0.031 above our best
+holdout result. We expected both submissions to match our best holdouts: their
+models saw about 18\% more data and the ensembles are larger. The \taskb{} score
+and the \taska{} accuracy are above every holdout figure we recorded, and on the
+\taska{} holdout independent TAPT runs agreed (pairs and fours 0.8619--0.8721,
+single models 0.848--0.861). We cannot tell why the \taska{} macro-F1 is lower.
+Training is not deterministic and the submitted models are new runs; our holdout
+scores are optimistic, since we chose configurations on them; and the test
+comments may differ in topic or class balance.
+
+\paragraph{Gemma against the baselines.} One Gemma model beat the \taska{} SVM by
+0.043 ([0.021, 0.067]); two Gemma models beat \taskb{} MuRIL by 0.064 ([0.024,
+0.105]). The old systems no longer helped: a 50/50 blend with the SVM scored
+0.8471 on \taska{}, below Gemma alone, and adding MuRIL on \taskb{} gave 0.6825
+against 0.6792. Four epochs helped \taskb{}, mostly Violence (0.483 against 0.410;
+unpaired runs), and hurt \taska{} (0.8313 against 0.8610 in one run), whose larger
+data peaked by epoch two or three.
+
+\paragraph{TAPT.} At equal size, two TAPT models from two TAPT runs scored 0.8619
+and 0.8675 on \taska{}, against 0.8610 without TAPT; single TAPT models averaged
+0.8519 over four seeds against 0.8483 over three. The gain grew with ensemble
+size: four TAPT models scored 0.8702, three without TAPT 0.8582 (no paired
+interval), and two R-Drop models added to a TAPT pair gave 0.8721 (+0.010, [0.000,
+0.020]). We cannot separate TAPT's gain from that of averaging more models. On
+\taskb{} two TAPT runs differing only in seed scored 0.6741 and 0.7056, either
+side of the 0.6872 without TAPT, a seed effect familiar from fine-tuning
+\citep{dodge-etal-2020-fine}; one Geo-political comment is 3.2\% of that
+class's recall here. In the first run, R-Drop models scored 0.029 above plain ones
+([$-0.004$, 0.062]) and all four together 0.023 above the plain pair ([0.004,
+0.042]). Two runs cannot show whether TAPT helps \taskb{}; we submitted TAPT
+ensembles because they gave the best holdout score on both tasks and a second
+\taska{} TAPT run repeated the first's gain.
+
+\paragraph{What did not help on Gemma.} On \taskb{} without TAPT, the organizers'
+category definitions in the prompt tied (0.6840 against 0.6830), mixing both
+prompts gave +0.005 ([$-0.018$, 0.027]), square-root class weights lost 0.004
+(their higher accuracy came from the large classes), and R-Drop changed
+macro-F1 by $-0.002$ ([$-0.027$, 0.023]): each R-Drop model beat its plain twin,
+but their average did not, consistent with R-Drop increasing agreement between
+models.
+
+\paragraph{Per class.} For the best \taskb{} pair (0.7056), Violence (0.532) and
+Others (0.559) are weakest, Political (0.824) and Gender (0.821) strongest: the
+classes Section~\ref{sec:language} predicts to be hard are those defined by the
+target and the act, not by names.
+
+\section{Discussion}
+Replacing the baseline with Gemma is the only comparison whose bootstrap interval
+lies above zero on both tasks, and the unlabelled screen chose Gemma before any
+fine-tuning. Little was tuned on the holdout: equal weights, no thresholds, and
+only the \taskb{} epoch count, TAPT and the R-Drop members chosen by comparison.
+Most of what helped changed the representation: character n-grams, TAPT,
+re-initialized layers and Gemma. Features built from word lists mostly marked
+comments already classified correctly; the remaining errors are in comments
+without profanity (\taska{}) and in classes defined by the target (\taskb{}),
+which need a model that reads the whole comment. We cannot say what makes Gemma
+better than MuRIL, since size, pretraining data, tokenizer and fine-tuning all
+changed at once.
+
+Of 18 averages of two or more same-recipe models, 13 beat their best member (by
+0.002--0.026) and five fell between their members. Averaging in weaker models
+(four-epoch \taska{} models, the SVM, MuRIL) did not help. TAPT's \taska{} gains
+appear mainly in ensembles, perhaps because TAPT decorrelates errors; we have not
+measured this.
+
+The submitted ensembles were limited by the available compute, and their design
+was not optimized; their size reflects the number of TAPT runs that could be completed. More seeds, more TAPT runs and
+a second model family would likely have helped. Appendix~\ref{app:unfinished}
+lists what we prepared but did not finish, including Qwen3-8B.
+
+\section{Reproducibility}
+\label{sec:repro}
+We release our code, both recipes and a reproduction package\footnote{The
+branch \texttt{reproduce} of our repository contains only what is needed to rebuild
+the submitted systems:
+\url{https://github.com/Aaryan127/ProjectMANAS-HastikaICON2026/tree/reproduce}.}. A system is
+rebuilt group by group. Each group (one TAPT run and its classifiers) is one
+Kaggle session on two T4 GPUs, TAPT first and then the classifiers two at a
+time, in 4.5 to 7.6 hours: about 30 GPU-hours for \taska{} and 20 for \taskb{}.
+One notebook per session needs only the organizer files and the external
+corpus; a final CPU notebook averages the members and writes
+the submission file. A script does the same on a local GPU and resumes after an
+interruption. Every data file is checked against a recorded checksum and each
+holdout against its fingerprint. Since a rerun cannot be scored without test
+labels, a holdout recipe retrains the same groups on the 85\% split and reports
+each group's score beside the original run of that group. A rerun will not match
+exactly: GPU training is not deterministic, the base-model revision and some
+replacement seeds were not recorded, and removing external comments that match
+test comments changes one \taska{} TAPT comment. A smoke test runs every stage
+on a small sample in about 30 minutes, including reloading a saved model and
+checking that it reproduces its predictions; the package's orchestration is also
+tested on a CPU.
+
+\section{Conclusion}
+Analysis of the data identified the main challenges: agglutinative
+morphology, unstable spelling, slurs whose category depends on their target, and
+grammatical markers of violent intent. A 4-bit Gemma-4-12B with LoRA and a
+classification head, the largest model that fits a single T4 GPU, beat our
+best SVM by 0.043 on \taska{} and our best MuRIL system by 0.064 on \taskb{}, and
+TAPT ensembles reached 0.8721 and 0.7056 on our holdouts. For our submissions,
+12 and 8 TAPT models trained on all labelled data, the organizers report 0.8250
+and 0.7367 macro-F1.
+
+\section*{Limitations}
+We had no test labels, so apart from the official scores every number here comes
+from labelled released data. We compared more than twenty configurations on the
+same holdouts, so the best scores are likely optimistic, and the holdouts are
+small: two runs of one \taskb{} configuration differed by 0.03. Most comparisons in
+Table~\ref{tab:dev} are single runs without intervals, and several settings in
+Table~\ref{tab:muril} and Section~\ref{sec:final} rest on reasoning, without
+ablation. We fine-tuned only two decoders. Reproduction needs the Gemma-4-12B
+weights, transformers 5.16.1, PEFT 0.20.0 and the bitsandbytes 4-bit kernels, and
+may not match exactly (Section~\ref{sec:repro}). For some runs we kept only logs,
+not weights or probabilities.
+
+\section*{Ethics Statement}
+Labels were assigned to single comments without their thread or video, and some
+comments are hard to judge without that context. We dropped the identical
+comments that carry conflicting labels (10 in \taska{}, 6 in \taskb{}); the rest
+of the label subjectivity remains. A false positive can suppress legitimate
+speech such as political criticism, and a false negative leaves abuse in place.
+Hate-speech classifiers can also be biased against particular groups and
+dialects \citep{sap-etal-2019-risk}.
+Accuracy varies by class, from 0.53 F1 for Violence to 0.82 for Political on our
+best \taskb{} pair. The system should not moderate without human review; Kannada
+speakers should review its errors, and it should be tested on newer comments, as
+spelling and topics change. The external TAPT comments are released under CC BY
+4.0.
+
+\bibliographystyle{acl_natbib}
+\bibliography{paper_refs}
+
+\appendix
+
+\section{Development History}
+\label{app:timeline}
+This appendix summarizes the order in which approaches were developed and the
+evidence that motivated each step, including negative results.
+
+\paragraph{Baselines.} The initial plan used XLM-R, which remained at the
+all-one-class solution for two epochs and reached 0.716 in a CPU run. MuRIL
+reached 0.8023 on a validation split with emoji replaced by their names, while a
+TF-IDF SVM reached 0.8103 five-fold, establishing the SVM as the floor for all
+later \taska{} systems. A set of 150 synthetic comments was separable from real
+comments at an AUC of 0.94 and was not pursued.
+
+\paragraph{Data-processing interventions.} After deduplication, construction of
+the external corpus and the CPU analysis of Section~\ref{sec:language}, two
+sweeps on \taskb{} (8.4 and 8.9 hours) evaluated corpus mixing, vocabulary
+extension, an auxiliary violence head and alternative encoders. Only TAPT
+improved on stock MuRIL. The subsequent work therefore concentrated on the
+representation.
+
+\paragraph{Improving the MuRIL recipe.} TAPT MuRIL with one re-initialized layer
+and R-Drop reached 0.6410 in the \taskb{} validation phase, the best result
+before Gemma. Further candidates were derived from the data analysis: entity
+and topic tags, sentiment and address features, stopword removal, stemming and
+lemmatization, removal of redundant Gender comments, and a confidence threshold
+for Violence and Others. The tags lowered the SVM by 0.007; stopword removal
+and stemming were ruled out by the analysis of Section~\ref{sec:language}; and
+the threshold was developed into a context-aware decoding rule that gained 2.9
+points on the SVM but was not evaluated on MuRIL. On \taska{}, an SVM and MuRIL
+blend that scored 0.8233 out of fold scored 0.7890 in the validation phase,
+which motivated refitting both members on all training data (0.8187).
+
+\paragraph{Translation.} Following the organizers' pipeline, comments were
+translated into English after a slur-survival check. Only 1\% of slurs
+survived, and hateBERT on the translations scored 0.053 below MuRIL, so the
+approach was discontinued in favour of reading the romanized text directly with
+a larger model.
+
+\paragraph{Decoder language models.} 4-bit quantization made a 12B model
+trainable on a T4 GPU. Gemma-4-12B ranked first in the unlabelled screen and
+produced the largest gains of the project, 0.064 on \taskb{} and 0.043 on
+\taska{}. One \taska{} seed collapsed to a single class, which led to the
+collapse guard of Section~\ref{sec:final}. R-Drop improved individual Gemma
+models but not their average. TAPT on Gemma at first exceeded GPU memory; the
+fixes are described in Section~\ref{sec:tapt}.
+
+\paragraph{TAPT ensembles.} Four TAPT models reached 0.8702 on the \taska{}
+holdout, and 0.8721 with two R-Drop models added. On \taskb{}, two TAPT runs
+differing only in seed scored 0.6741 and 0.7056. Because single configurations
+varied by about three points with the seed, further tuning on the holdout was
+avoided in favour of a fixed rule: average every independently trained TAPT
+model (Section~\ref{sec:ensembles}), with three additional TAPT runs per task.
+
+\section{Directions Not Completed}
+\label{app:unfinished}
+
+\noindent{\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.42\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Idea (task) & What happened \\
+\midrule
+MuRIL-large (A, B) & time budget exceeded; one fit unscored; one out of memory \\
+Qwen3-8B companion (A) & second in the screen; prepared, not run \\
+Gemma-4 26B, 31B & do not fit a T4 in 4 bits \\
+Gemma-4 translation model & gated \\
+IndicTrans2 (A) & would not install on Kaggle \\
+context-aware Violence decoding (B) & +2.9 on the SVM; not run on MuRIL \\
+topic and address tags on MuRIL (B) & fit written, no score \\
+external OffensEval labels (A) & +0.003 on the SVM; permissibility under the task rules unresolved \\
+XLM-R as third blend member (A) & dropped after the frozen-model analysis \\
+removing redundant Gender comments (B) & not built \\
+LoRA rank, LR $2\!\times\!10^{-4}$, frozen Gemma & prepared, not run \\
+definitions prompt (A) & not run; tied on \taskb{} \\
+synthetic data for small classes (B) & not tried \\
+whole-word masking in TAPT (B) & with 2.3 pieces per word, masked pieces are often predictable from the same word; not built \\
+self-distillation (B) & soft labels for the noisy Gender/Others boundary; not built \\
+supervised contrastive loss & for low surface overlap (0.27); not built \\
+\bottomrule
+\end{tabularx}}
+
+\end{document}

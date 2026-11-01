@@ -1,0 +1,22 @@
+{
+  "task": "a",
+  "run": 22,
+  "session": null,
+  "title": "Run 21 blend: released-validation score and test predictions",
+  "notebook": "notebooks/experiments/task_a/22_run21_validation_and_test.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Run 21's fixed 0.60/0.33/0.07 blend fitted on original training data: released-validation macro-F1 0.8150 / accuracy 0.8151 on 806 rows; then refitted on train + validation for test predictions.",
+  "method": "fit the fixed Run 21 0.60/0.33/0.07 blend on original training data for an honest released-validation score, then refit on train plus validation for released-test predictions",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run22_run21_validation_and_test.log",
+      "sha256": "416e8c173bd0aad23c7d5cb443a88a3a6d03a75d090a4f0ce74af36d1cc74716",
+      "lines": 112,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

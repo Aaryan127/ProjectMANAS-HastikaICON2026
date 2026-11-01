@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 37,
+  "session": 2,
+  "title": "TAPT bag, full data",
+  "notebook": "notebooks/experiments/task_b/37_tapt_bag_full_session2.ipynb",
+  "script": null,
+  "status": "completed_full_fit",
+  "outcome": "Bag session 2 (TAPT seed 2, classifier seeds 44 and 45), all 3,532 rows. Its two models are in the final Task B ensemble.",
+  "method": "TAPT bag, full data: 3 TAPT runs (2 epochs) x 2 classifiers",
+  "note": null,
+  "final_ensemble_members": 2,
+  "logs": [
+    {
+      "log": "run37_tapt_bag_full_t2.log",
+      "sha256": "bee0f92466564f37f6582c79e4a8483d5e2e6d7fe5d3b0dccb8b39f006ec9894",
+      "lines": 406,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

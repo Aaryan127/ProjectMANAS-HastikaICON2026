@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 6,
+  "session": null,
+  "title": "TAPT MuRIL on 100% of the data",
+  "notebook": "notebooks/experiments/task_b/06_full_data_fit.ipynb",
+  "script": null,
+  "status": "not_run",
+  "outcome": "Run 5's winner on 100% of the data at both stages. Never run; Run 10 replaced it.",
+  "method": "original two-layer full-data fit",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

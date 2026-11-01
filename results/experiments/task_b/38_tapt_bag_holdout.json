@@ -1,0 +1,51 @@
+{
+  "task": "b",
+  "run": 38,
+  "session": null,
+  "title": "TAPT bag, holdout",
+  "notebook": "notebooks/experiments/task_b/38_tapt_bag_holdout.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "A new TAPT run (TAPT seed 1) with two classifiers: pair 0.7056 / 0.7547, the best Task B holdout. Seed 43 collapsed onto Violence and was rerun.",
+  "method": "TAPT bag holdout, `TAPT_SEED` 1",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run38_tapt_bag_holdout_t1.log",
+      "sha256": "d0ff07cb48b8193acc821e577c98a39dfca955b7e82c087a7a130f53326b9af8",
+      "lines": 430,
+      "metrics": [
+        {
+          "line": 413,
+          "label": "TAPT seed 1, classifier seed 42",
+          "macro_f1": 0.6956,
+          "accuracy": 0.7453,
+          "per_class_f1": {
+            "Gender": 0.822,
+            "Geo-political": 0.725,
+            "Others": 0.538,
+            "Political": 0.818,
+            "Religion": 0.765,
+            "Violence": 0.506
+          }
+        },
+        {
+          "line": 414,
+          "label": "TAPT seed 1, classifier seed 43",
+          "macro_f1": 0.6883,
+          "accuracy": 0.7415,
+          "per_class_f1": {
+            "Gender": 0.808,
+            "Geo-political": 0.687,
+            "Others": 0.504,
+            "Political": 0.814,
+            "Religion": 0.797,
+            "Violence": 0.521
+          }
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

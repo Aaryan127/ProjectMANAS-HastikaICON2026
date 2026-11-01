@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 33,
+  "session": null,
+  "title": "TAPT on the four-epoch recipe, holdout",
+  "notebook": "notebooks/experiments/task_b/33_gemma_tapt_4ep_holdout.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "TAPT on the 4-epoch recipe against that recipe. No run log or score was kept, so whether it ran is not known.",
+  "method": "TAPT on top of the current best recipe (4 epochs) vs that recipe, 2 seeds, on the holdout",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

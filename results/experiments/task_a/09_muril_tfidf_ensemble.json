@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 9,
+  "session": null,
+  "title": "MuRIL + TF-IDF out-of-fold blend",
+  "notebook": "notebooks/experiments/task_a/09_muril_tfidf_ensemble.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Out-of-fold: SVM 0.8073, MuRIL 0.7932, 57/43 blend 0.8233 (nested 0.8230). On CodaBench the blend scored only 0.7890 / 0.7891, below Run 7, so it was not kept.",
+  "method": "test a MuRIL + TF-IDF OOF blend",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 1,
+  "session": null,
+  "title": "MuRIL baseline",
+  "notebook": null,
+  "script": "python -m hastika.research.task_a.train --model google/muril-base-cased",
+  "status": "completed",
+  "outcome": "Stock MuRIL (`google/muril-base-cased`), 6 epochs, default cleaning: best macro-F1 0.7937 (epoch 6) on a stratified validation split of `binary_train.csv`.",
+  "method": null,
+  "note": "Measured with an early revision of the trainer, before duplicate removal was added.",
+  "final_ensemble_members": 0,
+  "logs": []
+}

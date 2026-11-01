@@ -1,0 +1,79 @@
+{
+  "task": "b",
+  "run": 19,
+  "session": null,
+  "title": "LLM screen against MuRIL on the fixed holdout",
+  "notebook": "notebooks/experiments/task_b/19_llm_screen_holdout.ipynb",
+  "script": null,
+  "status": "partial_failure",
+  "outcome": "Unlabelled bits-per-character screen: Gemma-4-12B 3.011, Sarvam-1 3.081, Qwen3-8B 3.192, Gemma-4-E4B 4.295. On the 530-row holdout MuRIL scored 0.6151 and Sarvam-1 0.5567 (-0.058). Gemma, the screen's winner, crashed on a peft/torchao version check before training.",
+  "method": "does a 4-bit QLoRA LLM beat the Run 11 MuRIL recipe on the fixed 530-row holdout?",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run19_llm_screen_holdout.log",
+      "sha256": "48a8fc60efa5e6b72c94824a8b956582f07b5e7f80f8685ec55a9de9b73ba2cd",
+      "lines": 353,
+      "metrics": [
+        {
+          "line": 238,
+          "label": "MuRIL Run 11 recipe",
+          "macro_f1": 0.6151,
+          "accuracy": 0.6509,
+          "per_class_f1": {
+            "Gender": 0.704,
+            "Geo-political": 0.642,
+            "Others": 0.5,
+            "Political": 0.789,
+            "Religion": 0.672,
+            "Violence": 0.383
+          }
+        },
+        {
+          "line": 333,
+          "label": "MuRIL (Run 11 recipe)",
+          "macro_f1": 0.6151,
+          "accuracy": 0.6509,
+          "per_class_f1": {
+            "Gender": 0.704,
+            "Geo-political": 0.642,
+            "Others": 0.5,
+            "Political": 0.789,
+            "Religion": 0.672,
+            "Violence": 0.383
+          }
+        },
+        {
+          "line": 334,
+          "label": "sarvamai/sarvam-1",
+          "macro_f1": 0.5567,
+          "accuracy": 0.6075,
+          "per_class_f1": {
+            "Gender": 0.685,
+            "Geo-political": 0.488,
+            "Others": 0.437,
+            "Political": 0.757,
+            "Religion": 0.714,
+            "Violence": 0.259
+          }
+        },
+        {
+          "line": 339,
+          "label": "ensemble 50/50",
+          "macro_f1": 0.6187,
+          "accuracy": 0.6698,
+          "per_class_f1": {
+            "Gender": 0.734,
+            "Geo-political": 0.585,
+            "Others": 0.528,
+            "Political": 0.792,
+            "Religion": 0.724,
+            "Violence": 0.349
+          }
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

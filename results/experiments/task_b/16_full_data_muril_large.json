@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 16,
+  "session": null,
+  "title": "MuRIL-large, full data",
+  "notebook": "notebooks/experiments/task_b/16_full_data_muril_large.ipynb",
+  "script": null,
+  "status": "completed_full_fit",
+  "outcome": "MuRIL-large with Run 11's recipe on all data. The ZIP was written, but no score was recorded; Gemma superseded MuRIL.",
+  "method": "MuRIL-large version of the Run 11 recipe, full data",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run16_muril_large_full.log",
+      "sha256": "9c54a973ad31309ddc8c7caec8bc9947ef506866d421e0c73b05e7fefdeb580e",
+      "lines": 4919,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

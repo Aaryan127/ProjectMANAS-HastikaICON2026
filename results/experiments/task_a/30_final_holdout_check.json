@@ -1,0 +1,94 @@
+{
+  "task": "a",
+  "run": 30,
+  "session": null,
+  "title": "Holdout check: 3 against 4 epochs",
+  "notebook": "notebooks/experiments/task_a/30_final_holdout_check.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Holdout: 3 epochs x2 0.8610, 4 epochs x2 0.8313, all four 0.8563 (-0.005 against 3 epochs x2). Four epochs overfit Task A. Seed 43 collapsed, was caught by the guard and rerun as seed 1043.",
+  "method": "holdout twin of Run 23 (3 epochs x2) + Run 29 at 4 epochs (seeds 44/45)",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run30_final_holdout_check.log",
+      "sha256": "8e7c17ac514bf22c76eae9e4c7888ccb4e07eb67780e9fd48f9a5b0db54088b2",
+      "lines": 704,
+      "metrics": [
+        {
+          "line": 684,
+          "label": "3ep_s42",
+          "macro_f1": 0.8563,
+          "accuracy": 0.8563,
+          "per_class_f1": {
+            "Non-Hate": 0.856,
+            "Hate": 0.857
+          }
+        },
+        {
+          "line": 685,
+          "label": "3ep_s43",
+          "macro_f1": 0.8573,
+          "accuracy": 0.8573,
+          "per_class_f1": {
+            "Non-Hate": 0.859,
+            "Hate": 0.856
+          }
+        },
+        {
+          "line": 686,
+          "label": "4ep_s44",
+          "macro_f1": 0.8211,
+          "accuracy": 0.8211,
+          "per_class_f1": {
+            "Non-Hate": 0.823,
+            "Hate": 0.819
+          }
+        },
+        {
+          "line": 687,
+          "label": "4ep_s45",
+          "macro_f1": 0.8387,
+          "accuracy": 0.8387,
+          "per_class_f1": {
+            "Non-Hate": 0.841,
+            "Hate": 0.836
+          }
+        },
+        {
+          "line": 691,
+          "label": "FINAL: all four (4/4)",
+          "macro_f1": 0.8563,
+          "accuracy": 0.8563,
+          "per_class_f1": {
+            "Non-Hate": 0.858,
+            "Hate": 0.854
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "line": 693,
+          "label": "final - current best: Run 23",
+          "macro_f1_difference": -0.0046,
+          "ci95": [
+            -0.0158,
+            0.0065
+          ],
+          "p_better": 0.2
+        },
+        {
+          "line": 694,
+          "label": "final - Run 29 today: 4 epoc",
+          "macro_f1_difference": 0.025,
+          "ci95": [
+            0.0129,
+            0.0371
+          ],
+          "p_better": 1.0
+        }
+      ]
+    }
+  ]
+}

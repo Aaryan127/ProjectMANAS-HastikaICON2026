@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 36,
+  "session": null,
+  "title": "TAPT + R-Drop full-data fit",
+  "notebook": "notebooks/experiments/task_b/36_tapt_rdrop_final.ipynb",
+  "script": null,
+  "status": "completed_full_fit",
+  "outcome": "Two full-data TAPT (2 epochs) + R-Drop 0.5 fits, 4 epochs (6.5 h). Both are in the final Task B ensemble.",
+  "method": "full data: TAPT (2 epochs) + R-Drop, two 4-epoch seeds",
+  "note": null,
+  "final_ensemble_members": 2,
+  "logs": [
+    {
+      "log": "run36_tapt_rdrop_full.log",
+      "sha256": "e1f5a93a6c922fe492d13070fd5171a9621710124d2bb186af3431aa693b4e7a",
+      "lines": 642,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "task": "a",
+  "run": 31,
+  "session": null,
+  "title": "TAPT holdout twin: TAPT x4 against base",
+  "notebook": "notebooks/experiments/task_a/31_tapt_final_holdout_twin.ipynb",
+  "script": null,
+  "status": "completed_modified_source",
+  "outcome": "TAPT x4 scored 0.8702 against 0.8582 for base x3. Single TAPT models match single base models (means 0.852 and 0.848); the gain comes from averaging. This was a modified copy of the notebook; the file here is the regenerated version.",
+  "method": "holdout twin of the TAPT submission",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run31_tapt_holdout_4x4_modified.log",
+      "sha256": "a057e4c99411851346ba39dfa00027cdf941d81a6f3a99278864d451938aeb4c",
+      "lines": 1313,
+      "metrics": [
+        {
+          "line": 1302,
+          "label": "base (3/4 seeds)",
+          "macro_f1": 0.8582,
+          "accuracy": 0.8582,
+          "per_class_f1": {}
+        },
+        {
+          "line": 1303,
+          "label": "tapt (4/4 seeds)",
+          "macro_f1": 0.8702,
+          "accuracy": 0.8703,
+          "per_class_f1": {}
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

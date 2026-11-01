@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 16,
+  "session": null,
+  "title": "Short paired R-Drop holdout",
+  "notebook": "notebooks/experiments/task_a/16_rdrop_short.ipynb",
+  "script": null,
+  "status": "not_run",
+  "outcome": "A paired 80-minute holdout test of R-Drop 0.5 against a control. Never run.",
+  "method": "paired 80-minute holdout test of R-Drop 0.5 vs control on Task A",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

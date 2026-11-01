@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 3,
+  "session": null,
+  "title": "Five-seed full fits of the sweep's ideas",
+  "notebook": "notebooks/experiments/task_b/03_fullfit_sweep.ipynb",
+  "script": null,
+  "status": "score_unconfirmed",
+  "outcome": "Six ideas, each trained five times on all 3,143 deduplicated rows. The TAPT arm's 0.6007 CodaBench score was inferred from download timing and never confirmed.",
+  "method": "full-data five-seed versions",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

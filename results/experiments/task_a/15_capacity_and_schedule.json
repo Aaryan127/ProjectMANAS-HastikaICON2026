@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 15,
+  "session": null,
+  "title": "Capacity and schedule",
+  "notebook": "notebooks/experiments/task_a/15_capacity_and_schedule.ipynb",
+  "script": null,
+  "status": "not_run",
+  "outcome": "MuRIL-large and a longer schedule against the one-layer control, five folds. Never run; superseded before it was started.",
+  "method": "15 capacity and schedule",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

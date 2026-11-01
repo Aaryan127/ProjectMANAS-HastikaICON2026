@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 2,
+  "session": null,
+  "title": "Demojized MuRIL",
+  "notebook": null,
+  "script": "python -m hastika.research.task_a.train_demojized",
+  "status": "completed",
+  "outcome": "Demojized MuRIL: 0.8023 (best epoch 5), +0.009 over Run 1. Emoji become English words instead of [UNK].",
+  "method": null,
+  "note": "Measured with an early revision of the trainer, before duplicate removal was added.",
+  "final_ensemble_members": 0,
+  "logs": []
+}

@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 27,
+  "session": null,
+  "title": "Definitions prompt and learning rate",
+  "notebook": "notebooks/experiments/task_b/27_gemma_prompt_lr.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "Definitions prompt and learning rate 2e-4. The definitions prompt was measured in Run 29; for this notebook, including its learning-rate arm, no run log or score was kept.",
+  "method": "the organisers' category definitions in the prompt; lr 2e-4",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

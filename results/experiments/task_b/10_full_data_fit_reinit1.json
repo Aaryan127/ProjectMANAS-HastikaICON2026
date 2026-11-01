@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 10,
+  "session": null,
+  "title": "Full-data one-layer fit",
+  "notebook": "notebooks/experiments/task_b/10_full_data_fit_reinit1.ipynb",
+  "script": null,
+  "status": "completed_full_fit",
+  "outcome": "One-layer TAPT MuRIL, five seeds on all 3,159 rows: CodaBench 0.6299 / 0.6886.",
+  "method": "train current candidate on all data and infer validation",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run10_full_data_reinit1.log",
+      "sha256": "31a6f8eef2e486ea25980d917562caf5e4a2d14678480213afd7e4605c3da50e",
+      "lines": 2635,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

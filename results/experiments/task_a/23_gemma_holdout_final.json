@@ -1,0 +1,114 @@
+{
+  "task": "a",
+  "run": 23,
+  "session": null,
+  "title": "Gemma-4-12B QLoRA: holdout, then full fits",
+  "notebook": "notebooks/experiments/task_a/23_gemma_holdout_final.ipynb",
+  "script": null,
+  "status": "completed_with_collapse",
+  "outcome": "Gemma-4-12B QLoRA, 3 epochs: seed 42 scored 0.8563 on the 1,079-row holdout against 0.8117 for the char SVM (+0.043, CI [+0.021, +0.067]). A 50/50 blend with the SVM lost 0.007. Seed 43 collapsed to all Non-Hate (0.3372); both full-data fits trained normally.",
+  "method": "Gemma-4-12B QLoRA on Task A: holdout vs char SVM and a 50/50 blend, then full fits and three ZIPs",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run23_gemma_holdout_full.log",
+      "sha256": "bf0dee94127138d5ade3ea27f4aa87899d49a97504f498cf15175ac5ac7c7306",
+      "lines": 614,
+      "metrics": [
+        {
+          "line": 23,
+          "label": "char SVM (holdout)",
+          "macro_f1": 0.8117,
+          "accuracy": 0.8119,
+          "per_class_f1": {
+            "Non-Hate": 0.817,
+            "Hate": 0.807
+          }
+        },
+        {
+          "line": 593,
+          "label": "char SVM",
+          "macro_f1": 0.8117,
+          "accuracy": 0.8119,
+          "per_class_f1": {
+            "Non-Hate": 0.817,
+            "Hate": 0.807
+          }
+        },
+        {
+          "line": 595,
+          "label": "Gemma seed 42",
+          "macro_f1": 0.8563,
+          "accuracy": 0.8563,
+          "per_class_f1": {
+            "Non-Hate": 0.856,
+            "Hate": 0.857
+          }
+        },
+        {
+          "line": 596,
+          "label": "Gemma seed 43",
+          "macro_f1": 0.3372,
+          "accuracy": 0.5088,
+          "per_class_f1": {
+            "Non-Hate": 0.674,
+            "Hate": 0.0
+          }
+        },
+        {
+          "line": 597,
+          "label": "Gemma, 2 seed(s)",
+          "macro_f1": 0.8545,
+          "accuracy": 0.8545,
+          "per_class_f1": {
+            "Non-Hate": 0.854,
+            "Hate": 0.854
+          }
+        },
+        {
+          "line": 598,
+          "label": "Gemma + SVM 50/50",
+          "macro_f1": 0.8471,
+          "accuracy": 0.8471,
+          "per_class_f1": {
+            "Non-Hate": 0.848,
+            "Hate": 0.846
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "line": 599,
+          "label": "gemma - svm",
+          "macro_f1_difference": 0.0428,
+          "ci95": [
+            0.0205,
+            0.0668
+          ],
+          "p_better": 1.0
+        },
+        {
+          "line": 600,
+          "label": "blend - gemma",
+          "macro_f1_difference": -0.0074,
+          "ci95": [
+            -0.0226,
+            0.0078
+          ],
+          "p_better": 0.16
+        },
+        {
+          "line": 601,
+          "label": "blend - svm",
+          "macro_f1_difference": 0.0353,
+          "ci95": [
+            0.0187,
+            0.0531
+          ],
+          "p_better": 1.0
+        }
+      ]
+    }
+  ]
+}

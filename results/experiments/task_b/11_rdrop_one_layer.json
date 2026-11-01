@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 11,
+  "session": null,
+  "title": "Full-data R-Drop, the MuRIL best",
+  "notebook": "notebooks/experiments/task_b/11_rdrop_one_layer.ipynb",
+  "script": null,
+  "status": "completed_full_fit",
+  "outcome": "Run 10 plus R-Drop 0.5: CodaBench 0.6410 / 0.6937, the best MuRIL result on Task B.",
+  "method": "submit full-data R-Drop on the current one-layer recipe",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run11_rdrop_full.log",
+      "sha256": "7aeeb4cb2660397820ecb7ee781ded982c7863d6f690fb4997080a0b43ca2015",
+      "lines": 2610,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

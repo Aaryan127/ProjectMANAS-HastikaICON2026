@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 5,
+  "session": null,
+  "title": "Synthetic training comments",
+  "notebook": null,
+  "script": "python src/hastika/research/experiments/task_a/synthetic/evaluate.py",
+  "status": "completed_negative",
+  "outcome": "150 generated comments, plus a surface-realism variant, added to training folds only: out-of-fold macro-F1 0.8032 -> 0.8053 / 0.8063, inside noise. A TF-IDF model tells generated from real comments at AUC 0.94, so the generated comments are easy to tell apart from real ones. Not used.",
+  "method": null,
+  "note": "Rerun for this record on CPU: AUC 0.942, out-of-fold 0.8032 -> 0.8053, matching the recorded numbers.",
+  "final_ensemble_members": 0,
+  "logs": []
+}

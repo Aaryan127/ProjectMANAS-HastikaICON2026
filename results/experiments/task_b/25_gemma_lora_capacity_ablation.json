@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 25,
+  "session": null,
+  "title": "LoRA capacity ablation",
+  "notebook": "notebooks/experiments/task_b/25_gemma_lora_capacity_ablation.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "LoRA rank 8/16/32, attention-only against attention + MLP. No run log or score was kept, so whether it ran is not known.",
+  "method": "LoRA rank 8/16/32 x attention-only vs attention + MLP, 2 seeds each, on the holdout",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

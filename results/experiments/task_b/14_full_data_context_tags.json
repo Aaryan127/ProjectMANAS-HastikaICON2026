@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 14,
+  "session": null,
+  "title": "Full-data context-tag fit",
+  "notebook": "notebooks/experiments/task_b/14_full_data_context_tags.ipynb",
+  "script": null,
+  "status": "partial_failure",
+  "outcome": "All five context-tagged full fits completed; a post-training log assertion stopped the notebook. The ZIP was recovered, but no score was recorded.",
+  "method": "train the context-tagged winning recipe on all labelled rows and package a submission",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run14_context_tags_full.log",
+      "sha256": "649e68530f8d68440e5f4adcc4a1914154c087184e3571d55be2160eb02e009f",
+      "lines": 2658,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 32,
+  "session": null,
+  "title": "Holdout check of the four-epoch recipe",
+  "notebook": "notebooks/experiments/task_b/32_final_holdout_check.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "Holdout twin of Run 22's four seeds plus Run 31's prompt ensemble. No run log or score was kept, so whether it ran is not known.",
+  "method": "holdout twin of the Task B final: Run 22's four 4-epoch seeds + Run 31's prompt ensemble (standard and definitions, seeds 42/43); eight-model combination vs Run 22's recipe",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

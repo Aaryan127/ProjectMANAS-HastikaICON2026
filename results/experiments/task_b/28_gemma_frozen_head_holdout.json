@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 28,
+  "session": null,
+  "title": "Frozen backbone, head only",
+  "notebook": "notebooks/experiments/task_b/28_gemma_frozen_head_holdout.ipynb",
+  "script": null,
+  "status": "not_run",
+  "outcome": "Frozen Gemma, classification head only. Never run.",
+  "method": "freeze Gemma-4-12B and train only the six-way classification head, two seeds on the fixed 530-row holdout",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

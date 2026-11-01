@@ -1,0 +1,30 @@
+{
+  "task": "a",
+  "run": 11,
+  "session": null,
+  "title": "RBF SVM on frozen MuRIL embeddings",
+  "notebook": "notebooks/experiments/task_a/11_frozen_embeddings_svm.ipynb",
+  "script": null,
+  "status": "completed_negative",
+  "outcome": "Frozen MuRIL embeddings with an RBF SVM: CodaBench about 0.71 / 0.70. Rejected, and rejected as a blend member: on the rows where it disagrees with Run 10 it is right only 24% of the time.",
+  "method": "test an RBF SVM on frozen MuRIL embeddings",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run11_muril_embeddings_svm.log",
+      "sha256": "369ee181df3d609679f506fffc0f88a92cbfa648f63872da7e417995af35ee2e",
+      "lines": 880,
+      "metrics": [
+        {
+          "line": 854,
+          "label": "holdout",
+          "macro_f1": 0.7045,
+          "accuracy": 0.7066,
+          "per_class_f1": {}
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

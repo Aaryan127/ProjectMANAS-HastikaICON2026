@@ -1,0 +1,51 @@
+{
+  "task": "a",
+  "run": 10,
+  "session": null,
+  "title": "Full-data MuRIL + TF-IDF ensemble",
+  "notebook": "notebooks/experiments/task_a/09_muril_tfidf_ensemble.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "Both components refitted on all 6,401 deduplicated rows with Run 9's fixed 57/43 weights: CodaBench 0.8187 / 0.8189, the best Task A result at the time.",
+  "method": "Refit both Run 9 components on all data with Run 9's fixed blend weights",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run10_task_a_ensemble.log",
+      "sha256": "754cb52920996dad8695f2b52fc8c505aa6150aa2f95e9f626a1dc31bfb6d16d",
+      "lines": 2256,
+      "metrics": [
+        {
+          "line": 17,
+          "label": "task A  5-fold OOF",
+          "macro_f1": 0.8073,
+          "accuracy": 0.8074,
+          "per_class_f1": {}
+        },
+        {
+          "line": 2218,
+          "label": "OOF",
+          "macro_f1": 0.7932,
+          "accuracy": 0.7936,
+          "per_class_f1": {}
+        },
+        {
+          "line": 2219,
+          "label": "threshold-tuned OOF",
+          "macro_f1": 0.7944,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 2229,
+          "label": "best blend OOF",
+          "macro_f1": 0.8233,
+          "accuracy": 0.8235,
+          "per_class_f1": {}
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 15,
+  "session": null,
+  "title": "One change at a time on the Run 11 recipe",
+  "notebook": null,
+  "script": "python -m hastika.research.experiments.task_b.stack_full",
+  "status": "not_run",
+  "outcome": "Full-data arms stacked one change at a time on Run 11's 0.6410 recipe (10 epochs, an unchanged control, context tags, no FGM). Prepared as a script; never run.",
+  "method": null,
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

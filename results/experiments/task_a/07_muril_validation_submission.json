@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 7,
+  "session": null,
+  "title": "MuRIL validation submission",
+  "notebook": null,
+  "script": "python -m hastika.research.models.muril (flags not recorded)",
+  "status": "completed",
+  "outcome": "MuRIL validation submission: CodaBench macro-F1 0.8163 / accuracy 0.8164, above Run 4's five-fold 0.8103 (a different protocol). The exact flags of the submitted artifact were not recorded.",
+  "method": null,
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

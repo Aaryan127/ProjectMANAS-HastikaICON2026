@@ -1,0 +1,124 @@
+{
+  "task": "a",
+  "run": 33,
+  "session": null,
+  "title": "TAPT + R-Drop holdout twin",
+  "notebook": "notebooks/experiments/task_a/33_tapt_rdrop_holdout_twin.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "TAPT x2 0.8619, TAPT + R-Drop x2 0.8647 (+0.003, P 0.64), all four 0.8721 (+0.010 against TAPT x2, CI [0.000, +0.020]). R-Drop models join the final average as extra members.",
+  "method": "TAPT + R-Drop 0.5 vs TAPT, seeds 42/43, same adapter",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run33_tapt_rdrop_holdout.log",
+      "sha256": "c1b85068d384a1d768cf73c0cfe584191079a95c48d7bebe555e9b1ee03514f6",
+      "lines": 998,
+      "metrics": [
+        {
+          "line": 974,
+          "label": "tapt_rdrop_s42",
+          "macro_f1": 0.8526,
+          "accuracy": 0.8526,
+          "per_class_f1": {
+            "Non-Hate": 0.851,
+            "Hate": 0.854
+          }
+        },
+        {
+          "line": 975,
+          "label": "tapt_rdrop_s43",
+          "macro_f1": 0.8582,
+          "accuracy": 0.8582,
+          "per_class_f1": {
+            "Non-Hate": 0.857,
+            "Hate": 0.859
+          }
+        },
+        {
+          "line": 976,
+          "label": "tapt_s42",
+          "macro_f1": 0.8563,
+          "accuracy": 0.8563,
+          "per_class_f1": {
+            "Non-Hate": 0.858,
+            "Hate": 0.855
+          }
+        },
+        {
+          "line": 977,
+          "label": "tapt_s43",
+          "macro_f1": 0.8573,
+          "accuracy": 0.8573,
+          "per_class_f1": {
+            "Non-Hate": 0.856,
+            "Hate": 0.858
+          }
+        },
+        {
+          "line": 979,
+          "label": "TAPT x2 (Run 29 recipe) (2/2)",
+          "macro_f1": 0.8619,
+          "accuracy": 0.8619,
+          "per_class_f1": {
+            "Non-Hate": 0.862,
+            "Hate": 0.862
+          }
+        },
+        {
+          "line": 980,
+          "label": "TAPT + R-Drop x2 (2/2)",
+          "macro_f1": 0.8647,
+          "accuracy": 0.8647,
+          "per_class_f1": {
+            "Non-Hate": 0.863,
+            "Hate": 0.866
+          }
+        },
+        {
+          "line": 981,
+          "label": "FINAL: all four (4/4)",
+          "macro_f1": 0.8721,
+          "accuracy": 0.8721,
+          "per_class_f1": {
+            "Non-Hate": 0.871,
+            "Hate": 0.873
+          }
+        }
+      ],
+      "comparisons": [
+        {
+          "line": 983,
+          "label": "FINAL: all fo - TAPT x2 (Run",
+          "macro_f1_difference": 0.0102,
+          "ci95": [
+            0.0,
+            0.0204
+          ],
+          "p_better": 0.98
+        },
+        {
+          "line": 984,
+          "label": "FINAL: all fo - TAPT + R-Drop",
+          "macro_f1_difference": 0.0074,
+          "ci95": [
+            -0.0037,
+            0.0185
+          ],
+          "p_better": 0.91
+        },
+        {
+          "line": 985,
+          "label": "TAPT + R-Drop - TAPT x2 (Run",
+          "macro_f1_difference": 0.0028,
+          "ci95": [
+            -0.0121,
+            0.0176
+          ],
+          "p_better": 0.64
+        }
+      ]
+    }
+  ]
+}

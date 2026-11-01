@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 3,
+  "session": null,
+  "title": "TF-IDF + LinearSVC baseline",
+  "notebook": null,
+  "script": "python -m hastika.research.models.baseline_svm --task a",
+  "status": "completed",
+  "outcome": "Word + character TF-IDF with LinearSVC: five-fold macro-F1 0.8039, already above stock MuRIL.",
+  "method": null,
+  "note": "Measured with an early revision of baseline_svm.py, before duplicate removal. The current script scores 0.8104 five-fold on the 6,401 deduplicated rows (rerun for this record).",
+  "final_ensemble_members": 0,
+  "logs": []
+}

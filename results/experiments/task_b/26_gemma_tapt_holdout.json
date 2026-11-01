@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 26,
+  "session": null,
+  "title": "Gemma TAPT holdout",
+  "notebook": "notebooks/experiments/task_b/26_gemma_tapt_holdout.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "TAPT then classification against no TAPT on the holdout. No run log or score was kept, so whether it ran is not known.",
+  "method": "TAPT then classification vs no TAPT on the holdout",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

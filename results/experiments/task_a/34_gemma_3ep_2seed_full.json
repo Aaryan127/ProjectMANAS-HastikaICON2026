@@ -1,0 +1,14 @@
+{
+  "task": "a",
+  "run": 34,
+  "session": null,
+  "title": "Gemma, 3 epochs, two-seed full-data fit",
+  "notebook": "notebooks/experiments/task_a/34_gemma_3ep_2seed_full.ipynb",
+  "script": null,
+  "status": "no_run_recorded",
+  "outcome": "Two-seed, 3-epoch full-data fit of Run 24's recipe. No run log or score was kept, so whether it ran is not known.",
+  "method": "Gemma-4-12B QLoRA, 3 epochs, seeds 42 and 43, on all 7,193 labelled rows; test probabilities averaged into one ZIP",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

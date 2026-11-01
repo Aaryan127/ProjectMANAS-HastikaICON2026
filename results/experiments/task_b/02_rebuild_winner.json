@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 2,
+  "session": null,
+  "title": "Rebuild of the Run 1 winner",
+  "notebook": "notebooks/experiments/task_b/02_rebuild_winner.ipynb",
+  "script": null,
+  "status": "documented_result",
+  "outcome": "Reruns only the winning TAPT arm, with fixed seeds, in case the overnight output was lost. The ledger records 0.6013 / 0.5922 for that recipe; this copy has no separate log.",
+  "method": "rerun only the Run 1 TAPT arm at five folds with fixed seeds",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

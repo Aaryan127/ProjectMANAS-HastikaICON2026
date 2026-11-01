@@ -1,0 +1,79 @@
+{
+  "task": "b",
+  "run": 9,
+  "session": null,
+  "title": "No-reinitialization ablation",
+  "notebook": "notebooks/experiments/task_b/09_no_reinit_ablation.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "No reinitialization 0.584 against one layer 0.614. The zero-layer option was dropped.",
+  "method": "compare one layer with no reinitialization",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run9_no_reinit_ablation.log",
+      "sha256": "af3aeaac88376f62a8df0649c194f936c853d140f353b0a26963f062f76dfde6",
+      "lines": 9430,
+      "metrics": [
+        {
+          "line": 2670,
+          "label": "OOF",
+          "macro_f1": 0.6127,
+          "accuracy": 0.6564,
+          "per_class_f1": {}
+        },
+        {
+          "line": 2671,
+          "label": "OOF",
+          "macro_f1": 0.6135,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 4900,
+          "label": "OOF",
+          "macro_f1": 0.5854,
+          "accuracy": 0.6815,
+          "per_class_f1": {}
+        },
+        {
+          "line": 4901,
+          "label": "OOF",
+          "macro_f1": 0.5859,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 7130,
+          "label": "OOF",
+          "macro_f1": 0.6082,
+          "accuracy": 0.6602,
+          "per_class_f1": {}
+        },
+        {
+          "line": 7131,
+          "label": "OOF",
+          "macro_f1": 0.6093,
+          "accuracy": null,
+          "per_class_f1": {}
+        },
+        {
+          "line": 9360,
+          "label": "OOF",
+          "macro_f1": 0.576,
+          "accuracy": 0.6764,
+          "per_class_f1": {}
+        },
+        {
+          "line": 9361,
+          "label": "OOF",
+          "macro_f1": 0.5836,
+          "accuracy": null,
+          "per_class_f1": {}
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

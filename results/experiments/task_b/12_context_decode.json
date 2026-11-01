@@ -1,0 +1,14 @@
+{
+  "task": "b",
+  "run": 12,
+  "session": null,
+  "title": "Context-dependent Violence decoding",
+  "notebook": "notebooks/experiments/task_b/12_context_decode.ipynb",
+  "script": null,
+  "status": "not_run",
+  "outcome": "Does a violent word mean Violence only when no target group is named? Five-fold nested test of context-dependent decoding. Never run.",
+  "method": "does a violent word mean Violence only when no target group is named?",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": []
+}

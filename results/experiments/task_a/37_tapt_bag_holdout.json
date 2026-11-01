@@ -1,0 +1,43 @@
+{
+  "task": "a",
+  "run": 37,
+  "session": null,
+  "title": "TAPT bag, holdout",
+  "notebook": "notebooks/experiments/task_a/37_tapt_bag_holdout.ipynb",
+  "script": null,
+  "status": "completed",
+  "outcome": "A new TAPT run (TAPT seed 1) with two classifiers: 0.8535 and 0.8610 single, 0.8675 for the pair. A second TAPT run reproduces the TAPT gain.",
+  "method": "TAPT bag, holdout",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run37_tapt_bag_holdout_t1.log",
+      "sha256": "0a47cdee5c40b20248180305f88d9d5f5a2ef1313ed3cda4db0147a401bf7d9b",
+      "lines": 458,
+      "metrics": [
+        {
+          "line": 441,
+          "label": "TAPT seed 1, classifier seed 42",
+          "macro_f1": 0.8535,
+          "accuracy": 0.8536,
+          "per_class_f1": {
+            "Non-Hate": 0.852,
+            "Hate": 0.856
+          }
+        },
+        {
+          "line": 442,
+          "label": "TAPT seed 1, classifier seed 43",
+          "macro_f1": 0.861,
+          "accuracy": 0.861,
+          "per_class_f1": {
+            "Non-Hate": 0.861,
+            "Hate": 0.861
+          }
+        }
+      ],
+      "comparisons": []
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "task": "b",
+  "run": 21,
+  "session": null,
+  "title": "Packaging Run 20's Gemma full fits",
+  "notebook": "notebooks/experiments/task_b/21_package_run20.ipynb",
+  "script": null,
+  "status": "completed_full_fit",
+  "outcome": "Retrained and packaged Run 20's two 3-epoch full fits as a standalone test-prediction ZIP. Predicted class shares match the training prior.",
+  "method": "Run 20's 2-seed Gemma-4-12B full fits, packaged standalone (nothing attached, so both full fits retrained)",
+  "note": null,
+  "final_ensemble_members": 0,
+  "logs": [
+    {
+      "log": "run21_gemma_3ep_2seeds_full.log",
+      "sha256": "e9fa238857ba9bec627deb97c20012ffafe153a25be60e85b870fee72c730409",
+      "lines": 207,
+      "metrics": [],
+      "comparisons": []
+    }
+  ]
+}
